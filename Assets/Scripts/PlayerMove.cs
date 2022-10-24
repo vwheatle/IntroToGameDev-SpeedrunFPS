@@ -4,23 +4,37 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour {
 	CharacterController cc;
-	float moveSpeed = 4f;
+	float moveSpeed = 8f;
+	float jumpHeight = 8f;
+	
+	bool touchingGround = false;
+	
+	private float upward = -4f;
 	
 	void Start() {
 		cc = GetComponent<CharacterController>();
 	}
 	
 	void Update() {
+		RaycastHit hit;
+		touchingGround = Physics.Raycast(
+			new Ray(transform.position, Vector3.down),
+			out hit, cc.height / 2 + 0.1f
+		);
+		
 		Vector2 wasd = new Vector2(
 			Input.GetAxisRaw("Horizontal"),
 			Input.GetAxisRaw("Vertical")
-		).normalized;
+		)/*.normalized*/ * moveSpeed;
 		
-		Vector3 movement = new Vector3(wasd.x, -1f, wasd.y) * moveSpeed;
+		if (touchingGround && Input.GetButton("Jump")) {
+			upward = jumpHeight;
+		} else {
+			upward = Mathf.Max(-8f, upward - Mathf.Abs(Time.deltaTime * 12f));
+		}
+		
+		Vector3 movement = new Vector3(wasd.x, upward, wasd.y);
 		movement = transform.localRotation * movement;
-		
-		Vector3 gravity = new Vector3(0f, -1f, 0f);
-		movement += gravity;
 		
 		cc.Move(movement * Time.deltaTime);
 	}
