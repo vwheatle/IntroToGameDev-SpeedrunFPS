@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour {
-	Transform head;
+	Transform head, body;
 	
 	Vector2 rotation;
 	
@@ -21,10 +21,16 @@ public class MouseLook : MonoBehaviour {
 	
 	void Start() {
 		head = transform.Find("Head");
+		body = transform.Find("Body");
 		
 		// Lock cursor inside the window.
 		Cursor.lockState = CursorLockMode.Locked;
 	}
+	
+	// more todo:
+	// - https://github.com/wfowler1/Unity3D-BSP-Importer
+	// - https://trenchbroom.github.io/manual/latest/index.html#game_configuration_files
+	// - Documents\Apps\TrenchBroom-Win64-v2021.1-Release\games\SpeedrunFPS
 	
 	void Update() {
 		// Based on reddit people here https://redd.it/8k7w7v but good
@@ -42,5 +48,7 @@ public class MouseLook : MonoBehaviour {
 		// These also override any other rotations to the player or head.
 		transform.localRotation = Quaternion.Euler(0f, rotation.x, 0f);
 		head     .localRotation = Quaternion.Euler(rotation.y, 0f, 0f);
+		
+		body.localRotation = Quaternion.Euler(rotation.y * 0.4f, 0f, 0f);
 	}
 }
