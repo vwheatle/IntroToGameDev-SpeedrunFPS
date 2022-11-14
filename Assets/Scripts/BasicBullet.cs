@@ -50,8 +50,9 @@ public class BasicBullet : MonoBehaviour {
 		
 		BasicBullet otherBullet = other.gameObject.GetComponent<BasicBullet>();
 		if (otherBullet) {
+			// return;
 			Debug.Log($"Hurt {otherBullet.origin.name}, originator of {other.name}");
-			otherBullet.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+			// otherBullet.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
 		}
 		
 		// Debug.Log($"Bullet from {origin.name} hit {other.name} ({insideOrigin})");
