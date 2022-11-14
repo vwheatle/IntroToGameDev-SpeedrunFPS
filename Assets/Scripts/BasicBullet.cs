@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicBullet : MonoBehaviour {
+	// Which object created this bullet?
 	GameObject origin_;
 	public bool insideOrigin = true;
 	
@@ -29,6 +30,7 @@ public class BasicBullet : MonoBehaviour {
 		rb.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 	
+	// Actually cause the bullet to move forward.
 	public void Shoot(float force = 12f) {
 		rb.AddForce(
 			transform.forward * force,
@@ -36,12 +38,15 @@ public class BasicBullet : MonoBehaviour {
 		);
 	}
 	
+	// Is the given GameObject actually this bullet's origin?
 	bool IsOrigin(GameObject other) {
 		return origin && other.transform == origin.transform;
 		// || other.transform.IsChildOf(origin.transform);
+		// // uncomment to allow origin children to be valid too.
 	}
 	
 	void OnTriggerEnter(Collider other) {
+		// If the bullet is inside the origin, disregard it.
 		if (insideOrigin && IsOrigin(other.gameObject))
 			return;
 		
@@ -49,13 +54,17 @@ public class BasicBullet : MonoBehaviour {
 		other.gameObject.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
 		
 		BasicBullet otherBullet = other.gameObject.GetComponent<BasicBullet>();
-		if (otherBullet) {
-			// return;
-			Debug.Log($"Hurt {otherBullet.origin.name}, originator of {other.name}");
-			// otherBullet.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+		if (otherBullet && origin != otherBullet.origin) {
+			// Debug.Log($"Hurt {otherBullet.origin.name}, originator of {other.name}");
+			if (!otherBullet.origin.CompareTag("Player"))
+				otherBullet.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
 		}
 		
 		// Debug.Log($"Bullet from {origin.name} hit {other.name} ({insideOrigin})");
+		Destroy(this.gameObject);
+	}
+	
+	void Hurt(GameObject culprit) {
 		Destroy(this.gameObject);
 	}
 	

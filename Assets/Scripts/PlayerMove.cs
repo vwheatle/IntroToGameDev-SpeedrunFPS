@@ -62,16 +62,12 @@ public class PlayerMove : MonoBehaviour {
 			upward = Mathf.Max(-8f, upward - Mathf.Abs(Time.deltaTime * 12f));
 		}
 		
+		if (transform.position.y < -5f) upward = 16f;
+		
 		Vector3 movement = new Vector3(wasd.x, upward, wasd.y);
 		movement = transform.localRotation * movement;
 		
-		// // Debug Jetpack
-		// if (Input.GetButton("Fire1")) {
-		// 	Vector3 h = -head.forward * 16f;
-		// 	cc.Move((movement + h) * Time.deltaTime);
-		// } else {
-			cc.Move(movement * Time.deltaTime);
-		// }
+		cc.Move(movement * Time.deltaTime);
 		
 		// == Sway body around while walking. ==
 		
@@ -95,27 +91,7 @@ public class PlayerMove : MonoBehaviour {
 			Mathf.Abs(Mathf.Cos(Mathf.PI * swayTime * 0.4f)) * swayMagnitude / 16f,
 			0f
 		);
-	}
-	
-	// void OnCollisionEnter(Collision bonk) {
-	// 	ContactPoint[] contacts = {};
-	// 	bonk.GetContacts(contacts);
-		
-	// 	Vector3 direction = bonk.impulse;
-	// 	Debug.DrawRay(transform.position, direction);
-	// }
-	
-	// hate unity
-	void OnControllerColliderHit(ControllerColliderHit bonk) {
-		float feetY = transform.position.y + cc.height / 4f;
-		bool grounded = false;
-		
-		if (feetY >= bonk.point.y && Vector3.Dot(bonk.normal, Vector3.up) > 0.3f) {
-			grounded = true;
-			// log.PrintLine($"Grounded on '{bonk.gameObject.name}'");
-			upward = 0;
-		}
-		
-		Debug.DrawRay(bonk.point, bonk.normal * 4f, grounded ? Color.green : Color.red);
+		body.localEulerAngles = Vector3.up *
+			Mathf.Sin(Mathf.PI * swayTime * 0.1f) * swayMagnitude * 3f;
 	}
 }
