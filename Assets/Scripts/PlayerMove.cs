@@ -2,21 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// struct PlayerBonkInfo {
+// 	bool aroundHead, aroundBody, aroundFeet;
+	
+// 	static PlayerBonkInfo FromDirection(Vector3 direction) {
+// 	}
+// };
+
 public class PlayerMove : MonoBehaviour {
 	CharacterController cc;
+	
+	public TextLog log;
+	
 	float moveSpeed = 8f;
 	float jumpHeight = 8f;
 	
 	bool touchingGround = false;
 	
+	private Vector3 acceleration = Vector3.zero;
+	private float upward = -4f;
+	
+	// Body Sway
 	private float swayTime = 0f;
 	private float swayMagnitude = 0f;
 	private float swayDampenVelocity;
 	
-	private Vector3 acceleration = Vector3.zero;
-	private float upward = -4f;
-	
 	private Transform head, body;
+	
+	// private Hashtable<GameObject, >
 	
 	void Start() {
 		cc = GetComponent<CharacterController>();
@@ -26,11 +39,12 @@ public class PlayerMove : MonoBehaviour {
 	}
 	
 	void Update() {
-		RaycastHit hit;
-		touchingGround = Physics.Raycast(
-			new Ray(transform.position, Vector3.down),
-			out hit, cc.height / 2 + 0.1f
-		);
+		// RaycastHit hit;
+		// touchingGround = Physics.Raycast(
+		// 	new Ray(transform.position, Vector3.down),
+		// 	out hit, cc.height / 2 + 0.1f
+		// );
+		touchingGround = cc.isGrounded;
 		
 		Vector2 wasd = new Vector2(
 			Input.GetAxisRaw("Horizontal"),
@@ -40,6 +54,7 @@ public class PlayerMove : MonoBehaviour {
 		if (touchingGround) {
 			if (Input.GetButton("Jump")) {
 				upward = jumpHeight;
+				touchingGround = false;
 			} else {
 				upward = 0;
 			}
@@ -50,13 +65,13 @@ public class PlayerMove : MonoBehaviour {
 		Vector3 movement = new Vector3(wasd.x, upward, wasd.y);
 		movement = transform.localRotation * movement;
 		
-		// Debug Jetpack
-		if (Input.GetButton("Fire1")) {
-			Vector3 h = -head.forward * 16f;
-			cc.Move(h * Time.deltaTime);
-		}
-		
-		cc.Move(movement * Time.deltaTime);
+		// // Debug Jetpack
+		// if (Input.GetButton("Fire1")) {
+		// 	Vector3 h = -head.forward * 16f;
+		// 	cc.Move((movement + h) * Time.deltaTime);
+		// } else {
+			cc.Move(movement * Time.deltaTime);
+		// }
 		
 		// == Sway body around while walking. ==
 		
@@ -80,5 +95,27 @@ public class PlayerMove : MonoBehaviour {
 			Mathf.Abs(Mathf.Cos(Mathf.PI * swayTime * 0.4f)) * swayMagnitude / 16f,
 			0f
 		);
+	}
+	
+	// void OnCollisionEnter(Collision bonk) {
+	// 	ContactPoint[] contacts = {};
+	// 	bonk.GetContacts(contacts);
+		
+	// 	Vector3 direction = bonk.impulse;
+	// 	Debug.DrawRay(transform.position, direction);
+	// }
+	
+	// hate unity
+	void OnControllerColliderHit(ControllerColliderHit bonk) {
+		float feetY = transform.position.y + cc.height / 4f;
+		bool grounded = false;
+		
+		if (feetY >= bonk.point.y && Vector3.Dot(bonk.normal, Vector3.up) > 0.3f) {
+			grounded = true;
+			// log.PrintLine($"Grounded on '{bonk.gameObject.name}'");
+			upward = 0;
+		}
+		
+		Debug.DrawRay(bonk.point, bonk.normal * 4f, grounded ? Color.green : Color.red);
 	}
 }
