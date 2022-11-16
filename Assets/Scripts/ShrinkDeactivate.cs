@@ -31,7 +31,6 @@ public class ShrinkDeactivate : MonoBehaviour {
 	
 	public void Reset() {
 		transform.localScale = initialScale;
-		gameObject.SetActive(true);
 		_active = false;
 		
 		if (collider) collider.enabled = true;

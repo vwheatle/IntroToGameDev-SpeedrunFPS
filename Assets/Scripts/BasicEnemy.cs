@@ -10,7 +10,8 @@ public class BasicEnemy : MonoBehaviour {
 	public float shootInterval = 0.75f;
 	public float maximumDetectRange = 32f;
 	
-	public int hits = 1;
+	public int totalHits = 1;
+	private int hits;
 	
 	GameObject player;
 	
@@ -18,8 +19,6 @@ public class BasicEnemy : MonoBehaviour {
 	ShrinkDeactivate deactivate;
 	
 	void Awake() {
-		timer = float.NegativeInfinity; // shoot asap
-		
 		em = transform.parent.GetComponent<EnemyManager>();
 		player = em.player;
 		
@@ -27,8 +26,15 @@ public class BasicEnemy : MonoBehaviour {
 		deactivate = GetComponent<ShrinkDeactivate>();
 	}
 	
+	public void Reset() {
+		hits = totalHits;
+		
+		transform.localRotation = Quaternion.identity;
+		timer = float.NegativeInfinity; // shoot asap
+	}
+	
 	void LateUpdate() {
-		if (deactivate.active) return;
+		if (deactivate && deactivate.active) return;
 		
 		bool canSeePlayer = (player.transform.position - this.transform.position).magnitude <= maximumDetectRange;
 		
@@ -36,7 +42,9 @@ public class BasicEnemy : MonoBehaviour {
 		canSeePlayer = canSeePlayer && Physics.Linecast(
 			this.transform.position,
 			player.transform.position,
-			out hitInfo
+			out hitInfo,
+			-1,
+			QueryTriggerInteraction.Ignore
 		) && hitInfo.collider.gameObject == player;
 		// TODO: physics layer for just map objects
 		
@@ -61,25 +69,22 @@ public class BasicEnemy : MonoBehaviour {
 				
 				timer = Time.time;
 			}
-		} else {
-			timer = Time.time;
 		}
 	}
 	
 	void Hurt(GameObject culprit) {
 		hits--;
 		if (hits == 0) {
-			em.killed++;
-			
 			// Play a bleep sound, adjusting the pitch based on how many
 			// enemies you've already killed.
 			audioSource.pitch = 1f + em.percentKilled;
 			audioSource.Play();
 			
 			// Play animation of "shrinking into nothing", then deactivate.
-			deactivate.StartShrink();
+			if (deactivate) deactivate.StartShrink();
+			else gameObject.SetActive(false);
 			
-			culprit.SendMessage("KilledEnemy", this.gameObject, SendMessageOptions.DontRequireReceiver);
+			em.OnKill(this.gameObject, culprit);
 		}
 	}
 }

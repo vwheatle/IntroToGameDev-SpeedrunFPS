@@ -30,6 +30,10 @@ public class BasicBullet : MonoBehaviour {
 		rb.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 	
+	void Reset() {
+		Destroy(this.gameObject);
+	}
+	
 	// Actually cause the bullet to move forward.
 	public void Shoot(float force = 12f) {
 		rb.AddForce(
@@ -46,31 +50,46 @@ public class BasicBullet : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
-		// If the bullet is inside the origin, disregard it.
+		// If the bullet is inside the origin, disregard the collision.
 		if (insideOrigin && IsOrigin(other.gameObject))
 			return;
 		
-		// TODO: what if it hurt every object in a radius..
-		other.gameObject.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
-		
-		BasicBullet otherBullet = other.gameObject.GetComponent<BasicBullet>();
-		if (otherBullet && origin != otherBullet.origin) {
-			// Debug.Log($"Hurt {otherBullet.origin.name}, originator of {other.name}");
-			if (!otherBullet.origin.CompareTag("Player"))
-				otherBullet.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+		// (No variable shadowing in C# so I have to resort to pun names...)
+		BasicBullet bother = other.gameObject.GetComponent<BasicBullet>();
+		if (bother) {
+			// If this bullet hit another bullet...
+			
+			// if they both originate from the same person, wtf.
+			if (origin == bother.origin) {
+				origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+			} else {
+				// Again, if this bullet hit another bullet...
+				
+				// ...and this bullet is from a player...
+				if (origin.CompareTag("Player"))
+					// ...hurt the non-player entity.
+					bother.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+				
+				// ...and the other bullet is from a player...
+				if (bother.origin.CompareTag("Player"))
+					// ...hurt the non-player entity.
+					origin.SendMessage("Hurt", bother.origin, SendMessageOptions.DontRequireReceiver);
+			}
+			
+			// Interacting with the other bullet destroys it.
+			Destroy(other.gameObject);
+		} else {
+			// TODO: what if bullets hurt every object in a radius..
+			// (maybe using Physics.CollideSphere or something.)
+			other.gameObject.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
 		}
 		
-		// Debug.Log($"Bullet from {origin.name} hit {other.name} ({insideOrigin})");
-		Destroy(this.gameObject);
-	}
-	
-	void Hurt(GameObject culprit) {
+		// And yeah, bullets get destroyed after they hit a thing.
 		Destroy(this.gameObject);
 	}
 	
 	void OnTriggerExit(Collider other) {
-		if (insideOrigin && IsOrigin(other.gameObject)) {
+		if (insideOrigin && IsOrigin(other.gameObject))
 			insideOrigin = false;
-		}
 	}
 }

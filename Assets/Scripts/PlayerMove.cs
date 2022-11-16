@@ -14,12 +14,14 @@ public class PlayerMove : MonoBehaviour {
 	
 	public TextLog log;
 	
+	private Vector3 startPosition;
+	private float startRotationY;
+	
 	float moveSpeed = 8f;
 	float jumpHeight = 8f;
 	
 	bool touchingGround = false;
 	
-	private Vector3 acceleration = Vector3.zero;
 	private float upward = -4f;
 	
 	// Body Sway
@@ -29,13 +31,26 @@ public class PlayerMove : MonoBehaviour {
 	
 	private Transform head, body;
 	
-	// private Hashtable<GameObject, >
-	
 	void Start() {
+		startPosition = transform.localPosition;
+		startRotationY = transform.localEulerAngles.y;
+		
 		cc = GetComponent<CharacterController>();
 		
 		head = transform.Find("Head"); // where's your head at?
 		body = transform.Find("Body");
+		
+		Reset();
+	}
+	
+	void Reset() {
+		transform.localPosition = startPosition;
+		// rotation resets are handled in mouselook...
+		
+		// https://forum.unity.com/threads/36149/#post-5360436
+		Physics.SyncTransforms();
+		
+		upward = 0f;
 	}
 	
 	void Update() {
@@ -44,6 +59,7 @@ public class PlayerMove : MonoBehaviour {
 		// 	new Ray(transform.position, Vector3.down),
 		// 	out hit, cc.height / 2 + 0.1f
 		// );
+		
 		touchingGround = cc.isGrounded;
 		
 		Vector2 wasd = new Vector2(
@@ -61,8 +77,6 @@ public class PlayerMove : MonoBehaviour {
 		} else {
 			upward = Mathf.Max(-8f, upward - Mathf.Abs(Time.deltaTime * 12f));
 		}
-		
-		if (transform.position.y < -5f) upward = 16f;
 		
 		Vector3 movement = new Vector3(wasd.x, upward, wasd.y);
 		movement = transform.localRotation * movement;
@@ -86,12 +100,12 @@ public class PlayerMove : MonoBehaviour {
 		}
 		
 		// Move your body!
-		body.localPosition = new Vector3(
+		body.localPosition = head.localPosition + new Vector3(
 			Mathf.Sin(Mathf.PI * swayTime * 0.4f) * swayMagnitude / 12f,
 			Mathf.Abs(Mathf.Cos(Mathf.PI * swayTime * 0.4f)) * swayMagnitude / 16f,
 			0f
 		);
-		body.localEulerAngles = Vector3.up *
-			Mathf.Sin(Mathf.PI * swayTime * 0.1f) * swayMagnitude * 3f;
+		// body.localEulerAngles += Vector3.up *
+		// 	Mathf.Sin(Mathf.PI * swayTime * 0.1f) * swayMagnitude * 3f;
 	}
 }

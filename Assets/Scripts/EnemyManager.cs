@@ -8,28 +8,16 @@ public class EnemyManager : MonoBehaviour {
 	
 	
 	[Header("Pickup Goal")]
-	private int _killed = 0;
+	private int killed = 0;
 	public int goalKills = -1;
-	public int killed {
-		get => _killed;
-		set {
-			_killed = value;
-			if (achievedGoalPickups) {
-				if (_killed == goalKills)
-					log.PrintLine($"No obstacles remain.");
-				
-				// asdf
-			} else {
-				// asdf
-			}
-		}
-	}
 	public float percentKilled {
 		get => (float)killed / goalKills;
 	}
-	public bool achievedGoalPickups {
+	public bool achievedGoalKills {
 		get => killed >= goalKills;
 	}
+	
+	float startTime;
 	
 	void Start() {
 		// Set the target number of pickups to collect
@@ -43,8 +31,32 @@ public class EnemyManager : MonoBehaviour {
 	}
 	
 	void Reset() {
-		log.ClearLog();
-		log.PrintLine($"== BEGIN ORDER [0] ==\n{goalKills} Obstacles");
-		// TODO,
+		log.PrintLine($"{goalKills} Obstacles.");
+		
+		killed = 0;
+		foreach (Transform child in transform) {
+			child.gameObject.SetActive(true);
+			child.gameObject.SendMessage("Reset");
+		}
+		
+		startTime = Time.time;
+	}
+	
+	void PrintWithTimestamp(string message) {
+		log.PrintLine($"[{Time.time - startTime,6:0.00}s] " + message);
+	}
+	
+	public void OnKill(GameObject victim, GameObject killer = null) {
+		if (killer.CompareTag("Player")) {
+			PrintWithTimestamp($"Dismissed '{victim.name}'.");
+		} else {
+			PrintWithTimestamp($"'{victim.name}' was dismissed.");
+		}
+		
+		killed++;
+		
+		if (killed == goalKills) {
+			PrintWithTimestamp("No obstacles remain.");
+		}
 	}
 }
