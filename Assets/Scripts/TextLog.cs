@@ -4,26 +4,10 @@ using UnityEngine;
 using TMPro;
 
 public class TextLog : MonoBehaviour {
-	TMP_Text textLog;
+	public TMP_Text textLog;
 	
 	public int maxLines = 1;
 	public bool antispam = false;
-	
-	// private float time = 0;
-	
-	void Start() {
-		textLog = GetComponent<TMP_Text>();
-		ClearLog();
-		PrintLine("System Initialized!");
-		// time = Time.time;
-	}
-	
-	// void Update() {
-	// 	if (Time.time - time > 0.5f) {
-	// 		time = Time.time;
-	// 		PrintLine($"alsdjaksld {time}");
-	// 	}
-	// }
 	
 	public void ClearLog() {
 		textLog.text = "";

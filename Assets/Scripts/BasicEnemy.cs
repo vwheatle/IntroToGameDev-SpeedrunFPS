@@ -77,7 +77,8 @@ public class BasicEnemy : MonoBehaviour {
 		if (hits == 0) {
 			// Play a bleep sound, adjusting the pitch based on how many
 			// enemies you've already killed.
-			audioSource.pitch = 1f + em.percentKilled;
+			float pitchVariation = Random.value / Mathf.Min(4, em.goalKills) / 2;
+			audioSource.pitch = 1f + em.percentKilled + pitchVariation;
 			audioSource.Play();
 			
 			// Play animation of "shrinking into nothing", then deactivate.

@@ -8,19 +8,26 @@ public class PlayerShoot : MonoBehaviour {
 	
 	public TextLog log;
 	
+	AudioSource dieSound;
+	
 	Transform head;
 	
 	int shots, hits;
 	
 	void Start() {
+		dieSound = GetComponent<AudioSource>();
+		
 		head = transform.Find("Head");
+		
+		log.ClearLog();
+		log.PrintLine("== BEGIN ORDER [level number go here] ==");
+		log.PrintLine("System Initialized.");
 	}
 	
 	void ResetEverything(string rationale = null) {
 		log.ClearLog();
-		log.PrintLine("== BEGIN ORDER [level number go here] ==");
 		if (rationale != null)
-			log.PrintLine($"System Restarted.\nRestart reason: {rationale}.");
+			log.PrintLine($"System Restarted.\n(Reason: {rationale})");
 		else
 			log.PrintLine("System Initialized.");
 		
@@ -49,5 +56,6 @@ public class PlayerShoot : MonoBehaviour {
 	
 	void Hurt() {
 		ResetEverything("Environmental Factor");
+		dieSound.Play();
 	}
 }

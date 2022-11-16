@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyManager : MonoBehaviour {
 	public GameObject player;
 	public TextLog log;
+	public TMP_Text timer;
 	
 	
 	[Header("Pickup Goal")]
@@ -30,6 +32,10 @@ public class EnemyManager : MonoBehaviour {
 		Reset();
 	}
 	
+	void Update() {
+		timer.text = $"{Time.time - startTime,6:0.00}s";
+	}
+	
 	void Reset() {
 		log.PrintLine($"{goalKills} Obstacles.");
 		
@@ -48,9 +54,9 @@ public class EnemyManager : MonoBehaviour {
 	
 	public void OnKill(GameObject victim, GameObject killer = null) {
 		if (killer.CompareTag("Player")) {
-			PrintWithTimestamp($"Dismissed '{victim.name}'.");
+			PrintWithTimestamp($"Dismissed '{victim.transform.GetSiblingIndex()}'.");
 		} else {
-			PrintWithTimestamp($"'{victim.name}' was dismissed.");
+			PrintWithTimestamp($"'{victim.transform.GetSiblingIndex()}' was dismissed.");
 		}
 		
 		killed++;
