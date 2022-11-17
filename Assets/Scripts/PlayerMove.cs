@@ -40,10 +40,10 @@ public class PlayerMove : MonoBehaviour {
 		head = transform.Find("Head"); // where's your head at?
 		body = transform.Find("Body");
 		
-		Reset();
+		ResetLevel();
 	}
 	
-	void Reset() {
+	void ResetLevel() {
 		transform.localPosition = startPosition;
 		// rotation resets are handled in mouselook...
 		

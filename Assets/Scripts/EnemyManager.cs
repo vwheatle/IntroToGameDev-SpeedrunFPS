@@ -29,20 +29,20 @@ public class EnemyManager : MonoBehaviour {
 		if (goalKills < 0)
 			goalKills = transform.childCount;
 		
-		Reset();
+		ResetLevel();
 	}
 	
 	void Update() {
 		timer.text = $"{Time.time - startTime,6:0.00}s";
 	}
 	
-	void Reset() {
+	void ResetLevel() {
 		log.PrintLine($"{goalKills} Obstacles.");
 		
 		killed = 0;
 		foreach (Transform child in transform) {
 			child.gameObject.SetActive(true);
-			child.gameObject.SendMessage("Reset");
+			child.gameObject.SendMessage("ResetLevel");
 		}
 		
 		startTime = Time.time;

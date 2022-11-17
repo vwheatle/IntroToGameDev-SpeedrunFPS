@@ -24,9 +24,11 @@ public class BasicEnemy : MonoBehaviour {
 		
 		audioSource = GetComponent<AudioSource>();
 		deactivate = GetComponent<ShrinkDeactivate>();
+		
+		ResetLevel();
 	}
 	
-	public void Reset() {
+	public void ResetLevel() {
 		hits = totalHits;
 		
 		transform.localRotation = Quaternion.identity;

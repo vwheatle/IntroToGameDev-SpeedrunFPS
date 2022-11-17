@@ -33,7 +33,7 @@ public class PlayerShoot : MonoBehaviour {
 		
 		GameObject[] rootSiblings = SceneManager.GetActiveScene().GetRootGameObjects();
 		foreach (GameObject rootSibling in rootSiblings)
-			rootSibling.BroadcastMessage("Reset", SendMessageOptions.DontRequireReceiver);
+			rootSibling.BroadcastMessage("ResetLevel", SendMessageOptions.DontRequireReceiver);
 	}
 	
 	void Update() {

@@ -30,7 +30,7 @@ public class BasicBullet : MonoBehaviour {
 		rb.interpolation = RigidbodyInterpolation.Interpolate;
 	}
 	
-	void Reset() {
+	void ResetLevel() {
 		Destroy(this.gameObject);
 	}
 	

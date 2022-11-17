@@ -26,10 +26,10 @@ public class MouseLook : MonoBehaviour {
 		// Lock cursor inside the window.
 		Cursor.lockState = CursorLockMode.Locked;
 		
-		Reset();
+		ResetLevel();
 	}
 	
-	void Reset() {
+	void ResetLevel() {
 		rotation = Vector2.zero;
 		
 		// position resets are handled in playermove...

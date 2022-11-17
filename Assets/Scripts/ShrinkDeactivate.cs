@@ -29,7 +29,7 @@ public class ShrinkDeactivate : MonoBehaviour {
 		_active = true;
 	}
 	
-	public void Reset() {
+	public void ResetLevel() {
 		transform.localScale = initialScale;
 		_active = false;
 		
