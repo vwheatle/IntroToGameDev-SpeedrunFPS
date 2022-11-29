@@ -47,8 +47,7 @@ SubShader {
 			float4 _MainTex_ST;
 			float _Scale;
 
-			v2f vert (appdata_t v)
-			{
+			v2f vert(appdata_t v) {
 				v2f o;
 				UNITY_SETUP_INSTANCE_ID(v);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
@@ -62,34 +61,62 @@ SubShader {
 				return o;
 			}
 
-			fixed4 frag (v2f i) : SV_Target
-			{
+			fixed4 frag(v2f i) : SV_Target {
+				// Contains the uhhhhh the...
+				// the two axes that the texture's UV coordinates will vary
+				// in, I guess.
 				float2 t;
 				
 				// don't know anything about linear algebra and it's late right now, so.. :)
 				// this special-cases out the three axes lol,
 				if (abs(dot(i.normal, float3(0, 0, 1))) > 0.4) {
+					// Texture lies on XY plane.
 					t = i.texcoord.xy;
 				} else if (abs(dot(i.normal, float3(1, 0, 0))) > 0.4) {
+					// Texture lies on YZ plane.
+					// (and maintains the Y-up-ness of this world.)
 					t = i.texcoord.zy;
 				} else {
+					// Texture lies flat on XZ plane.
 					t = i.texcoord.xz;
 				}
 				
-				// sure.
+				// "normalized" screen-space coordinates.
+				// normalized in quotes because they're kinda saturated, but
+				// the horizontal component is scaled to the aspect ratio,
+				// meaning the aspect ratio will be correct, etc.
 				float aspectRatio = _ScreenParams.x / _ScreenParams.y;
 				float2 screenUV = i.screenpos.xy / i.screenpos.w;
 				screenUV.x *= aspectRatio;
 				
+				// The x position into the shiny effect's pattern function.
+				// (Takes into account distance from the camera!)
 				float pos = frac((i.texcoord.z - i.texcoord.x) / 64 + (screenUV.y / 3) - screenUV.x);
-				float trans = saturate(1 - (1 + step(pos, 0.5) - step(pos, 0.58) + step(pos, 0.75) - step(pos, 0.8)));
+				
+				// This contains the whole bar pattern of the shiny window.
+				float trans = saturate(1 - (1 + step(pos, 0.65) - step(pos, 0.7) + step(pos, 0.75) - step(pos, 0.8)));
+				// It's stored as a single transparency channel.
+				
+				// ...and then multiply that transparency channel by
 				trans *= i.texcoord.y / 32;
 				
-				fixed4 other = fixed4(1, 1, 1, trans);
+				// TODO: multiply the transparency also by the dot product of
+				// uhhhhhhhhh the camera. maybe make it solid 0.75 alpha white
+				// at side angles, just to mask the strange wavy artifacts.
+				
+				// Make an all-white "texture" from the shiny pattern.
+				fixed4 other = fixed2(1, trans).xxxy;
+				
+				// Get the actual other texture we promised we were gonna use.
 				fixed4 col = tex2D(_MainTex, t / _Scale);
+				
+				// Mix the reflection pattern with the window texture.
 				col = lerp(other, col, col.w);
 				
+				// Unity macro garbage to apply fog, I guess.
 				UNITY_APPLY_FOG(i.fogCoord, col);
+				
+				// Hooray.
 				return col;
 			}
 		ENDCG

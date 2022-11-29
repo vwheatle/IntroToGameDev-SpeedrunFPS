@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasicEnemy : MonoBehaviour {
 	EnemyManager em;
 	public GameObject bullet;
+	public float bulletSpeed = 12f;
 	
 	float timer = 0f;
 	public float shootInterval = 0.75f;
@@ -67,7 +68,7 @@ public class BasicEnemy : MonoBehaviour {
 				
 				BasicBullet bulletProps = goBullet.AddComponent<BasicBullet>();
 				bulletProps.origin = this.gameObject;
-				bulletProps.Shoot();
+				bulletProps.Shoot(bulletSpeed);
 				
 				timer = Time.time;
 			}

@@ -12,13 +12,17 @@ public class PlayerShoot : MonoBehaviour {
 	
 	Transform head;
 	
+	public float bulletSpeed = 12f;
+	
 	int shots, hits;
 	
-	void Start() {
+	void Awake() {
 		dieSound = GetComponent<AudioSource>();
 		
 		head = transform.Find("Head");
-		
+	}
+	
+	void Start() {
 		log.ClearLog();
 		log.PrintLine("== BEGIN ORDER [level number go here] ==");
 		log.PrintLine("System Initialized.");
@@ -49,7 +53,7 @@ public class PlayerShoot : MonoBehaviour {
 			
 			BasicBullet bulletProps = goBullet.AddComponent<BasicBullet>();
 			bulletProps.origin = this.gameObject;
-			bulletProps.Shoot();
+			bulletProps.Shoot(bulletSpeed);
 			shots++;
 		}
 	}

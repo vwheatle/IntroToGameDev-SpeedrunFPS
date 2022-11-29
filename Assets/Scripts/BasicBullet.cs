@@ -20,7 +20,9 @@ public class BasicBullet : MonoBehaviour {
 	void Awake() {
 		rb = gameObject.GetComponent<Rigidbody>();
 		if (!rb) rb = gameObject.AddComponent<Rigidbody>();
-		
+	}
+	
+	void Start() {
 		rb.useGravity = false;
 		rb.isKinematic = false;
 		
@@ -35,7 +37,7 @@ public class BasicBullet : MonoBehaviour {
 	}
 	
 	// Actually cause the bullet to move forward.
-	public void Shoot(float force = 12f) {
+	public void Shoot(float force) {
 		rb.AddForce(
 			transform.forward * force,
 			ForceMode.VelocityChange

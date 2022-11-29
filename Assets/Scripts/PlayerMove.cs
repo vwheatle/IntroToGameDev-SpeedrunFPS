@@ -17,8 +17,8 @@ public class PlayerMove : MonoBehaviour {
 	private Vector3 startPosition;
 	private float startRotationY;
 	
-	float moveSpeed = 8f;
-	float jumpHeight = 8.1f;
+	public float moveSpeed = 8f;
+	public float jumpHeight = 8.1f;
 	
 	bool touchingGround = false;
 	
