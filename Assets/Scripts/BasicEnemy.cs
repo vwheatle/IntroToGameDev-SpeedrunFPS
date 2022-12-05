@@ -20,7 +20,7 @@ public class BasicEnemy : MonoBehaviour {
 	ShrinkDeactivate deactivate;
 	
 	void Awake() {
-		em = transform.parent.GetComponent<EnemyManager>();
+		em = GetComponentInParent<EnemyManager>();
 		player = em.player;
 		
 		audioSource = GetComponent<AudioSource>();
@@ -89,6 +89,7 @@ public class BasicEnemy : MonoBehaviour {
 			else gameObject.SetActive(false);
 			
 			em.OnKill(this.gameObject, culprit);
+			culprit.SendMessage("Killed", this.gameObject, SendMessageOptions.DontRequireReceiver);
 		}
 	}
 }

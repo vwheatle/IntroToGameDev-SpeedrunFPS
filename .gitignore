@@ -80,3 +80,6 @@ crashlytics-build.properties
 # commits that included TextMesh Pro and use that.
 /[Aa]ssets/TextMesh Pro/
 /[Aa]ssets/TextMesh Pro.meta
+
+# :   )
+HighScoreServer/scores.db

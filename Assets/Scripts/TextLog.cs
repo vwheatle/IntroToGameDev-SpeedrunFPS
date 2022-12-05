@@ -13,6 +13,11 @@ public class TextLog : MonoBehaviour {
 		textLog.text = "";
 	}
 	
+	public void PrintMore(string l) {
+		textLog.text += l;
+		LimitLines();
+	}
+	
 	public void PrintLine(string l) {
 		if (antispam && WasJustPrinted(l)) return;
 		

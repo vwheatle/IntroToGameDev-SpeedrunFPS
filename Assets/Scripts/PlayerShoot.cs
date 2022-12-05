@@ -15,6 +15,9 @@ public class PlayerShoot : MonoBehaviour {
 	public float bulletSpeed = 12f;
 	
 	int shots, hits;
+	public float accuracyRatio {
+		get => (float)hits / shots;
+	}
 	
 	void Awake() {
 		dieSound = GetComponent<AudioSource>();
@@ -24,7 +27,6 @@ public class PlayerShoot : MonoBehaviour {
 	
 	void Start() {
 		log.ClearLog();
-		log.PrintLine("== BEGIN ORDER [level number go here] ==");
 		log.PrintLine("System Initialized.");
 	}
 	
@@ -38,13 +40,15 @@ public class PlayerShoot : MonoBehaviour {
 		GameObject[] rootSiblings = SceneManager.GetActiveScene().GetRootGameObjects();
 		foreach (GameObject rootSibling in rootSiblings)
 			rootSibling.BroadcastMessage("ResetLevel", SendMessageOptions.DontRequireReceiver);
+		
+		shots = 0; hits = 0;
 	}
 	
 	void Update() {
 		if (Input.GetButtonDown("Reset"))
 			ResetEverything("Reconsidering");
 		
-		if (Input.GetButtonDown("Fire1")) {
+		if (Input.GetButtonDown("Fire1") && Time.timeScale > 0.5f) { // HACK
 			GameObject goBullet = Instantiate(
 				bullet,
 				head.position + head.forward * 0.75f,
@@ -61,5 +65,9 @@ public class PlayerShoot : MonoBehaviour {
 	void Hurt() {
 		ResetEverything("Environmental Factor");
 		dieSound.Play();
+	}
+	
+	void Killed(GameObject victim) {
+		hits++;
 	}
 }

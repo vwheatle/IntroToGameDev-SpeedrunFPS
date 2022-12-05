@@ -89,7 +89,7 @@ public class PlayerMove : MonoBehaviour {
 		swayTime += (touchingGround ? 1f : 0.25f) * wasd.magnitude * Time.deltaTime;
 		if (wasd.sqrMagnitude > 0f) {
 			swayMagnitude = Mathf.Min(swayMagnitude + wasd.magnitude * Time.deltaTime, 1f);
-		} else {
+		} else if (Time.timeScale > 0.25f) { // HACK
 			// If you've stopped moving, dampen towards resting position.
 			// swayMagnitude = Mathf.Lerp(swayMagnitude, 0f, 0.1f);
 			swayMagnitude = Mathf.SmoothDamp(swayMagnitude, 0f, ref swayDampenVelocity, 0.1f);
