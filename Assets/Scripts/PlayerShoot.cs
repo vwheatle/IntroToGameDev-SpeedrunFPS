@@ -45,9 +45,6 @@ public class PlayerShoot : MonoBehaviour {
 	}
 	
 	void Update() {
-		if (Input.GetButtonDown("Reset"))
-			ResetEverything("Reconsidering");
-		
 		if (Input.GetButtonDown("Fire1") && Time.timeScale > 0.5f) { // HACK
 			GameObject goBullet = Instantiate(
 				bullet,
@@ -59,6 +56,16 @@ public class PlayerShoot : MonoBehaviour {
 			bulletProps.origin = this.gameObject;
 			bulletProps.Shoot(bulletSpeed);
 			shots++;
+		}
+	}
+	
+	void LateUpdate() {
+		if (Input.GetButtonDown("Reset")) {
+			ResetEverything("Reconsidering");
+			// Why not restart the entire scene?
+			// Well, because Unity is bad at making inputs persist
+			// across scene reloads -- and if I can avoid a load from
+			// disk, I will.
 		}
 	}
 	
