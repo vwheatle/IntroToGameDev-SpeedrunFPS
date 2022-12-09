@@ -12,6 +12,8 @@ public class Waypoint : MonoBehaviour {
 	
 	private float ignoreTime;
 	
+	private float offsetTime;
+	
 	void Awake() {
 		em = GetComponentInParent<EnemyManager>();
 		visual = this.transform.Find("Visual").gameObject;
@@ -19,12 +21,12 @@ public class Waypoint : MonoBehaviour {
 	}
 	
 	void Start() {
-		
+		offsetTime = -Mathf.Abs((transform.GetSiblingIndex() * 7.25f % 3.69f) % 1f);
 	}
 	
 	void Update() {
 		visual.transform.eulerAngles = new Vector3(
-			-75f, Time.time * 90f, 30f
+			-75f, (offsetTime + Time.time) * 90f, 30f
 		);
 		if (ignoreTime > 0f) ignoreTime -= Time.deltaTime;
 	}
