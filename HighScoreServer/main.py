@@ -74,7 +74,7 @@ def highscore(cur: Cursor, level: str, time: float, name: str, accuracy: bool):
 			LIMIT 5;
 		""", (level,))
 		formatted = "\n".join([
-			f"{i}: {name} :: {round(time, 2):.2f}{'*' if accuracy else ''}"
+			f"{i}: {name} :: {round(time, 2):.2f}s{'*' if accuracy else ''}"
 			for (i, (name, time, accuracy))
 			in enumerate(cur.fetchall(), start=1)
 		])

@@ -532,3 +532,4 @@ MonoBehaviour:
   textLog: {fileID: 4524289174120601225}
   maxLines: 10
   antispam: 0
+  charsPerSecond: 32

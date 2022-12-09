@@ -151,7 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2308684935519373644}
   m_Layer: 0
-  m_Name: Right Arm
+  m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2308684935578126368}
   m_Layer: 0
-  m_Name: Right Wrist
+  m_Name: Wrist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -845,7 +845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2308684936862072112}
   m_Layer: 0
-  m_Name: Right Forearm
+  m_Name: Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,7 +877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2308684936864312157}
   m_Layer: 0
-  m_Name: Right Palm
+  m_Name: Palm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

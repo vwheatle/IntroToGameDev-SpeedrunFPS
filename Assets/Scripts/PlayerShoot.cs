@@ -8,9 +8,13 @@ public class PlayerShoot : MonoBehaviour {
 	
 	public TextLog log;
 	
-	AudioSource dieSound;
+	AudioSource dieSound, shootSound;
 	
 	Transform head;
+	Transform gunArm;
+	
+	float armRecoil = 0f;
+	float armRecoilVelocity;
 	
 	public float bulletSpeed = 12f;
 	
@@ -23,6 +27,8 @@ public class PlayerShoot : MonoBehaviour {
 		dieSound = GetComponent<AudioSource>();
 		
 		head = transform.Find("Head");
+		gunArm = transform.Find("Body").Find("Left Arm").Find("Forearm");
+		shootSound = gunArm.GetComponentInChildren<AudioSource>();
 	}
 	
 	void Start() {
@@ -56,7 +62,17 @@ public class PlayerShoot : MonoBehaviour {
 			bulletProps.origin = this.gameObject;
 			bulletProps.Shoot(bulletSpeed);
 			shots++;
+			
+			armRecoil += 20f;
+			shootSound.Play();
 		}
+		
+		if (armRecoil > 0.001f) {
+			armRecoil = Mathf.SmoothDampAngle(armRecoil, 0f, ref armRecoilVelocity, 0.25f);
+		} else {
+			armRecoil = 0f;
+		}
+		gunArm.localRotation = Quaternion.Euler(0f, armRecoil, 0f);
 	}
 	
 	void LateUpdate() {
