@@ -64,6 +64,8 @@ public class PlayerShoot : MonoBehaviour {
 			shots++;
 			
 			armRecoil += 20f;
+			
+			shootSound.pitch = 1f + (Random.value / 16);
 			shootSound.Play();
 		}
 		
