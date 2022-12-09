@@ -3,50 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+class TextLogItem {
+	public TextLogItem(string text) {
+		this.time = 0f;
+		this.text = text;
+		this.done = false;
+	}
+	
+	public float time;
+	public string text;
+	public bool done;
+}
+
 public class TextLog : MonoBehaviour {
 	public TMP_Text textLog;
+	private List<TextLogItem> buffer;
 	
 	public int maxLines = 1;
 	public bool antispam = false;
 	
+	public float charsPerSecond = 32f;
+	
+	void Awake() {
+		buffer = new List<TextLogItem>();
+	}
+	
+	void Update() {
+		textLog.text = "";
+		
+		for (int i = 0; i < buffer.Count; i++) {
+			if (!buffer[i].done) {
+				float speed = 1f + (buffer.Count - i) * 0.75f;
+				buffer[i].time += Time.unscaledDeltaTime * speed * charsPerSecond;
+			}
+			
+			if (textLog.text.Length > 0) textLog.text += "\n";
+			
+			if (buffer[i].done) {
+				textLog.text += buffer[i].text;
+			} else {
+				int amount = Mathf.Min(Mathf.CeilToInt(buffer[i].time), buffer[i].text.Length);
+				textLog.text += buffer[i].text.Substring(0, amount) + "_";
+				if (amount >= buffer[i].text.Length) buffer[i].done = true;
+			}
+		}
+	}
+	
 	public void ClearLog() {
+		buffer.Clear();
 		textLog.text = "";
 	}
 	
-	public void PrintMore(string l) {
-		textLog.text += l;
+	public void PrintMore(string lines) {
+		bool youAlreadyAddedOne = false;
+		foreach (var line in lines.Split('\n')) {
+			if (buffer.Count <= 0 || youAlreadyAddedOne) {
+				buffer.Add(new TextLogItem(line));
+			} else {
+				TextLogItem last = buffer[buffer.Count - 1];
+				
+				last.done = false;
+				last.time = (float)last.text.Length;
+				last.text += line;
+				
+				youAlreadyAddedOne = true;
+			}
+		}
 		LimitLines();
 	}
 	
-	public void PrintLine(string l) {
-		if (antispam && WasJustPrinted(l)) return;
-		
-		if (textLog.text.Length > 0) textLog.text += '\n';
-		textLog.text += l;
-		
+	public void PrintLine(string lines) {
+		foreach (var line in lines.Split('\n')) {
+			if (antispam && WasJustPrinted(line)) continue;
+			buffer.Add(new TextLogItem(line));
+		}
 		LimitLines();
 	}
 	
 	bool WasJustPrinted(string l) {
-		int lastLine = textLog.text.LastIndexOf('\n') + 1;
-		return textLog.text.Substring(lastLine) == l;
+		return buffer.Count > 0 && buffer[buffer.Count - 1].text == l;
 	}
 	
 	void LimitLines() {
-		List<int> lineInstances = new List<int>();
-		int nextInstance = -1;
-		
-		do {
-			nextInstance = textLog.text.IndexOf('\n', nextInstance + 1);
-			if (nextInstance < 0) break; // sentinel values are sooo 1995
-			lineInstances.Add(nextInstance);
-		} while (nextInstance >= 0);
-		
-		int[] lines = lineInstances.ToArray();
-		
-		if (lines.Length >= maxLines) {
-			int keepPast = lines[lines.Length - maxLines];
-			textLog.text = textLog.text.Substring(keepPast);
-		}
+		buffer.RemoveRange(0, Mathf.Max(0, buffer.Count - maxLines));
 	}
 }
