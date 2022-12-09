@@ -86,6 +86,8 @@ public class EnemyManager : MonoBehaviour {
 	
 	async void SendScore(float time, bool good) {
 		log.PrintLine("Sending telemetrics...");
+		log.blinker = true;
+		
 		HttpRequestMessage request = new HttpRequestMessage(
 			HttpMethod.Post, "http://localhost:8000/score/submit");
 		request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {
@@ -97,6 +99,7 @@ public class EnemyManager : MonoBehaviour {
 		try {
 			HttpResponseMessage response = await client.SendAsync(request);
 			
+			log.blinker = false;
 			if (response.IsSuccessStatusCode) {
 				log.PrintMore(" Sent.");
 				string message = await response.Content.ReadAsStringAsync();
@@ -106,6 +109,7 @@ public class EnemyManager : MonoBehaviour {
 				log.PrintLine("Server failure.");
 			}
 		} catch (HttpRequestException ex) {
+			log.blinker = false;
 			log.PrintLine("Communication failure.");
 			Debug.Log(ex.Message);
 		}

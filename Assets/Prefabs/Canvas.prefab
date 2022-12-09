@@ -532,4 +532,6 @@ MonoBehaviour:
   textLog: {fileID: 4524289174120601225}
   maxLines: 10
   antispam: 0
-  charsPerSecond: 32
+  blinker: 0
+  blinkerBlinkInterval: 0.0625
+  charsPerSecond: 24

@@ -22,6 +22,9 @@ public class TextLog : MonoBehaviour {
 	public int maxLines = 1;
 	public bool antispam = false;
 	
+	public bool blinker = false;
+	public float blinkerBlinkInterval = 1/4f;
+	
 	public float charsPerSecond = 32f;
 	
 	void Awake() {
@@ -43,9 +46,15 @@ public class TextLog : MonoBehaviour {
 				textLog.text += buffer[i].text;
 			} else {
 				int amount = Mathf.Min(Mathf.CeilToInt(buffer[i].time), buffer[i].text.Length);
-				textLog.text += buffer[i].text.Substring(0, amount) + "_";
+				textLog.text += buffer[i].text.Substring(0, amount) + "█";
 				if (amount >= buffer[i].text.Length) buffer[i].done = true;
 			}
+		}
+		
+		bool lastDone = buffer.Count == 0 || buffer[buffer.Count - 1].done;
+		if (blinker && lastDone) {
+			bool blink = Time.unscaledTime % (blinkerBlinkInterval * 2) < blinkerBlinkInterval;
+			textLog.text += blink ? "█" : " ";
 		}
 	}
 	
