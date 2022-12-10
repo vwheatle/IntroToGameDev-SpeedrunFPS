@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net.Http;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -25,12 +25,7 @@ public class EnemyManager : MonoBehaviour {
 	
 	float startTime;
 	
-	private HttpClient client;
-	
 	void Start() {
-		// : )
-		client = new HttpClient();
-		
 		// Set the target number of pickups to collect
 		// to the number of children this gameobject has,
 		// if the automatic sentinel value is used.
@@ -80,38 +75,40 @@ public class EnemyManager : MonoBehaviour {
 			
 			if (goodAccuracy) log.PrintLine("Nominal accuracy.");
 			if (PlayerPrefs.GetInt("offline", 0) == 0)
-				SendScore(endTime, goodAccuracy);
+				StartCoroutine(SendScore(endTime, goodAccuracy));
 		}
 	}
 	
-	async void SendScore(float time, bool good) {
+	IEnumerator SendScore(float time, bool good) {
 		log.PrintLine("Sending telemetrics...");
 		log.blinker = true;
 		
-		HttpRequestMessage request = new HttpRequestMessage(
-			HttpMethod.Post, "http://localhost:8000/score/submit");
-		request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {
-			{ "level", SceneManager.GetActiveScene().name },
-			{ "time", time.ToString() },
-			{ "name", PlayerPrefs.GetString("name", "Bot" + UnityEngine.Random.Range(0, 999).ToString()) },
-			{ "accuracy", good ? "*" : "" }
-		});
-		try {
-			HttpResponseMessage response = await client.SendAsync(request);
-			
-			log.blinker = false;
-			if (response.IsSuccessStatusCode) {
-				log.PrintMore(" Sent.");
-				string message = await response.Content.ReadAsStringAsync();
-				// Debug.Log(message);
+		// holy cow unity's naming schemes are very eclectic.
+		WWWForm form = new WWWForm();
+		form.AddField("level", SceneManager.GetActiveScene().name);
+		form.AddField("time", time.ToString());
+		form.AddField("name", PlayerPrefs.GetString("name", "Bot" + UnityEngine.Random.Range(0, 999).ToString()));
+		form.AddField("accuracy", good ? "*" : "");
+		
+		UnityWebRequest www = UnityWebRequest.Post("http://localhost:8000/score/submit", form);
+		www.useHttpContinue = false;
+		yield return www.SendWebRequest();
+		
+		log.blinker = false;
+		if (www.isNetworkError) {
+			log.PrintLine("Network failure.");
+			Debug.Log(www.error);
+		} else if (www.isHttpError) {
+			log.PrintLine("Server failure.");
+			Debug.Log(www.error);
+		} else {
+			log.PrintMore(" Sent.");
+			if (www.downloadHandler.isDone) {
+				string message = www.downloadHandler.text;
 				log.PrintLine(message);
 			} else {
-				log.PrintLine("Server failure.");
+				log.PrintLine("ohhhm y god unity please.");
 			}
-		} catch (HttpRequestException ex) {
-			log.blinker = false;
-			log.PrintLine("Communication failure.");
-			Debug.Log(ex.Message);
 		}
 	}
 	
