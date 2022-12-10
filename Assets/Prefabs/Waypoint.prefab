@@ -60,6 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48a13cc3ccd71441a1a7d33eb976fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unvisitedMaterial: {fileID: 2100000, guid: 21467d566e465cc4096b02f9e1427d6e, type: 2}
+  visitedMaterial: {fileID: 2100000, guid: fdeddc429b5de7942aed4dcaf9a435f8, type: 2}
 --- !u!82 &714725091775937293
 AudioSource:
   m_ObjectHideFlags: 0
