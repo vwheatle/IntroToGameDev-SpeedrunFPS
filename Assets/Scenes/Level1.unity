@@ -2022,11 +2022,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4524289173435305112, guid: f5d8f91585da70a46bfa263c85a1de34,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -7.999878
-      objectReference: {fileID: 0}
     - target: {fileID: 4524289174093111409, guid: f5d8f91585da70a46bfa263c85a1de34,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2136,6 +2131,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524289174120601239, guid: f5d8f91585da70a46bfa263c85a1de34,
+        type: 3}
+      propertyPath: charsPerSecond
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d8f91585da70a46bfa263c85a1de34, type: 3}
@@ -3541,8 +3541,6 @@ MonoBehaviour:
   player: {fileID: 1630507369}
   log: {fileID: 948113470}
   timer: {fileID: 948113469}
-  nextScene:
-    m_Handle: 0
   goalKills: -1
   goalVisits: -1
 --- !u!1 &2083931657
