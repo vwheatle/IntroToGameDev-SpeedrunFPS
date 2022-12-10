@@ -50,5 +50,6 @@ public class Waypoint : MonoBehaviour {
 		visited = true;
 		
 		em.OnVisit(this.gameObject);
+		other.SendMessage("PlacePizza", SendMessageOptions.DontRequireReceiver);
 	}
 }

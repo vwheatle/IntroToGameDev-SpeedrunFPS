@@ -11,10 +11,13 @@ public class PlayerShoot : MonoBehaviour {
 	AudioSource dieSound, shootSound;
 	
 	Transform head;
-	Transform gunArm;
+	Transform gunArm, pizzaArm;
 	
-	float armRecoil = 0f;
-	float armRecoilVelocity;
+	float gunArmRecoil = 0f;
+	float gunArmRecoilVelocity;
+	
+	float pizzaArmRecoil = 0f;
+	float pizzaArmRecoilVelocity;
 	
 	public float bulletSpeed = 12f;
 	
@@ -26,6 +29,7 @@ public class PlayerShoot : MonoBehaviour {
 	void Awake() {
 		head = transform.Find("Head");
 		gunArm = transform.Find("Body").Find("Left Arm").Find("Forearm");
+		pizzaArm = transform.Find("Body").Find("Right Arm").Find("Forearm");
 		
 		dieSound = GetComponent<AudioSource>();
 		shootSound = gunArm.GetComponentInChildren<AudioSource>();
@@ -63,18 +67,16 @@ public class PlayerShoot : MonoBehaviour {
 			bulletProps.Shoot(bulletSpeed);
 			shots++;
 			
-			armRecoil += 20f;
+			gunArmRecoil += 20f;
 			
 			shootSound.pitch = 1f + (Random.value / 16);
 			shootSound.Play();
 		}
 		
-		if (armRecoil > 0.001f) {
-			armRecoil = Mathf.SmoothDampAngle(armRecoil, 0f, ref armRecoilVelocity, 0.25f);
-		} else {
-			armRecoil = 0f;
-		}
-		gunArm.localRotation = Quaternion.Euler(0f, armRecoil, 0f);
+		gunArmRecoil = Mathf.SmoothDampAngle(gunArmRecoil, 0f, ref gunArmRecoilVelocity, 0.25f);
+		pizzaArmRecoil = Mathf.SmoothDampAngle(pizzaArmRecoil, 0f, ref pizzaArmRecoilVelocity, 0.25f);
+		gunArm.localRotation = Quaternion.Euler(0f, gunArmRecoil, 0f);
+		pizzaArm.localRotation = Quaternion.Euler(pizzaArmRecoil, 0f, 0f);
 	}
 	
 	void LateUpdate() {
@@ -94,5 +96,9 @@ public class PlayerShoot : MonoBehaviour {
 	
 	void Killed(GameObject victim) {
 		hits++;
+	}
+	
+	void PlacePizza() {
+		pizzaArmRecoil += 20f;
 	}
 }
