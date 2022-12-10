@@ -65,7 +65,8 @@ public class PlayerMove : MonoBehaviour {
 		Vector2 wasd = new Vector2(
 			Input.GetAxisRaw("Horizontal"),
 			Input.GetAxisRaw("Vertical")
-		)/*.normalized*/ * moveSpeed;
+		).normalized * moveSpeed * Mathf.Sqrt(2);
+		// always strafewalking speed,
 		
 		if (touchingGround) {
 			if (Input.GetButton("Jump")) {

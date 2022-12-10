@@ -16,10 +16,12 @@ public class BasicBullet : MonoBehaviour {
 	}
 	
 	Rigidbody rb;
+	Collider coll;
 	
 	void Awake() {
-		rb = gameObject.GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody>();
 		if (!rb) rb = gameObject.AddComponent<Rigidbody>();
+		coll = GetComponent<Collider>();
 	}
 	
 	void Start() {
@@ -63,7 +65,7 @@ public class BasicBullet : MonoBehaviour {
 			
 			// if they both originate from the same person, wtf.
 			if (origin == bother.origin) {
-				origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+				// origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
 			} else {
 				// Again, if this bullet hit another bullet...
 				
@@ -81,13 +83,43 @@ public class BasicBullet : MonoBehaviour {
 			// Interacting with the other bullet destroys it.
 			Destroy(other.gameObject);
 		} else {
-			// TODO: what if bullets hurt every object in a radius..
-			// (maybe using Physics.CollideSphere or something.)
+			if (origin.CompareTag("Player") || other.gameObject.CompareTag("Player")) {
+				// Hack to not allow enemies to kill eachother.
+			
+			// Bullet Hitbox Cheese
+			DebugDrawBall(this.transform.position, this.coll.bounds.size.magnitude * 0.5f);
+			foreach (Collider c in Physics.OverlapSphere(
+				this.transform.position, this.coll.bounds.size.magnitude * 0.5f,
+				1 << LayerMask.NameToLayer("Default"),
+				QueryTriggerInteraction.Ignore
+			)) {
+				if (c.gameObject == other.gameObject) continue;
+				c.gameObject.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+			}
+			
 			other.gameObject.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+			
+			}
 		}
 		
 		// And yeah, bullets get destroyed after they hit a thing.
 		Destroy(this.gameObject);
+	}
+	
+	void DebugDrawBall(Vector3 position, float radius) {
+		Debug.DrawLine(position - Vector3.right * radius, position + Vector3.right * radius, Color.cyan, 1f);
+		Debug.DrawLine(position - Vector3.forward * radius, position + Vector3.forward * radius, Color.cyan, 1f);
+		Debug.DrawLine(position - Vector3.up * radius, position + Vector3.up * radius, Color.cyan, 1f);
+		
+		Debug.DrawLine(position - Vector3.up * radius, position + Vector3.forward * radius, Color.cyan, 1f);
+		Debug.DrawLine(position - Vector3.up * radius, position - Vector3.forward * radius, Color.cyan, 1f);
+		Debug.DrawLine(position - Vector3.up * radius, position + Vector3.right * radius, Color.cyan, 1f);
+		Debug.DrawLine(position - Vector3.up * radius, position - Vector3.right * radius, Color.cyan, 1f);
+		
+		Debug.DrawLine(position + Vector3.up * radius, position + Vector3.forward * radius, Color.cyan, 1f);
+		Debug.DrawLine(position + Vector3.up * radius, position - Vector3.forward * radius, Color.cyan, 1f);
+		Debug.DrawLine(position + Vector3.up * radius, position + Vector3.right * radius, Color.cyan, 1f);
+		Debug.DrawLine(position + Vector3.up * radius, position - Vector3.right * radius, Color.cyan, 1f);
 	}
 	
 	void OnTriggerExit(Collider other) {

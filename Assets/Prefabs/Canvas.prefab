@@ -138,7 +138,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 000.00
+  m_text: 000.00s
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 191158d98b7fcc144b71d594a000e851, type: 2}
   m_sharedMaterial: {fileID: -620212202466242155, guid: 191158d98b7fcc144b71d594a000e851,
@@ -533,5 +533,5 @@ MonoBehaviour:
   maxLines: 10
   antispam: 0
   blinker: 0
-  blinkerBlinkInterval: 0.0625
+  blinkerBlinkInterval: 0.125
   charsPerSecond: 24

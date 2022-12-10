@@ -24,10 +24,10 @@ public class PlayerShoot : MonoBehaviour {
 	}
 	
 	void Awake() {
-		dieSound = GetComponent<AudioSource>();
-		
 		head = transform.Find("Head");
 		gunArm = transform.Find("Body").Find("Left Arm").Find("Forearm");
+		
+		dieSound = GetComponent<AudioSource>();
 		shootSound = gunArm.GetComponentInChildren<AudioSource>();
 	}
 	
