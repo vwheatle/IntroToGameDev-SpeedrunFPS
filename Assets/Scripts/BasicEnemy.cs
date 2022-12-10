@@ -7,6 +7,8 @@ public class BasicEnemy : MonoBehaviour {
 	public GameObject bullet;
 	public float bulletSpeed = 12f;
 	
+	Quaternion initialRotation;
+	
 	float timer = 0f;
 	public float shootInterval = 0.75f;
 	public float maximumDetectRange = 32f;
@@ -20,19 +22,19 @@ public class BasicEnemy : MonoBehaviour {
 	ShrinkDeactivate deactivate;
 	
 	void Awake() {
+		initialRotation = transform.rotation;
+		
 		em = GetComponentInParent<EnemyManager>();
 		player = em.player;
 		
 		audioSource = GetComponent<AudioSource>();
 		deactivate = GetComponent<ShrinkDeactivate>();
-		
-		ResetLevel();
 	}
 	
 	public void ResetLevel() {
 		hits = totalHits;
 		
-		transform.localRotation = Quaternion.identity;
+		transform.localRotation = initialRotation;
 		timer = float.NegativeInfinity; // shoot asap
 	}
 	

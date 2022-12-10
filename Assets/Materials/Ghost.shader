@@ -73,7 +73,7 @@ SubShader {
 		
 		fixed4 frag(v2f i) : SV_Target {
 			// float scanTime = abs(_Time.y + i.vertex.z * 64.0 + cos(i.vertex.x / 128.0) + sin(i.vertex.y / 32.0)) % 1.0;
-			float scanTime = abs(sin(_Time.y + i.w_vertex.x / 2.0 + i.w_vertex.y * 3.0) * 0.4 + 0.5);
+			float scanTime = abs(sin(_Time.y + i.w_vertex.x + i.w_vertex.y * 2.25) * 0.4 + 0.5);
 			
 			// make  *something* happen
 			float2 lolIdk = lerp(i.texcoord.xy, i.normal.xy, 0.1);

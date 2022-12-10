@@ -87,9 +87,9 @@ public class BasicBullet : MonoBehaviour {
 				// Hack to not allow enemies to kill eachother.
 			
 			// Bullet Hitbox Cheese
-			DebugDrawBall(this.transform.position, this.coll.bounds.size.magnitude * 0.5f);
+			DebugDrawBall(this.transform.position, this.coll.bounds.extents.magnitude);
 			foreach (Collider c in Physics.OverlapSphere(
-				this.transform.position, this.coll.bounds.size.magnitude * 0.5f,
+				this.transform.position, this.coll.bounds.extents.magnitude,
 				1 << LayerMask.NameToLayer("Default"),
 				QueryTriggerInteraction.Ignore
 			)) {

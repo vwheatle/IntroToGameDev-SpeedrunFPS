@@ -75,7 +75,7 @@ public class PlayerShoot : MonoBehaviour {
 		
 		gunArmRecoil = Mathf.SmoothDampAngle(gunArmRecoil, 0f, ref gunArmRecoilVelocity, 0.25f);
 		pizzaArmRecoil = Mathf.SmoothDampAngle(pizzaArmRecoil, 0f, ref pizzaArmRecoilVelocity, 0.25f);
-		gunArm.localRotation = Quaternion.Euler(0f, gunArmRecoil, 0f);
+		gunArm.localRotation = Quaternion.Euler(0f, gunArmRecoil, -10f);
 		pizzaArm.localRotation = Quaternion.Euler(pizzaArmRecoil, 0f, 0f);
 	}
 	

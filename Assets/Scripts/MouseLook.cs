@@ -25,8 +25,6 @@ public class MouseLook : MonoBehaviour {
 		
 		// Lock cursor inside the window.
 		Cursor.lockState = CursorLockMode.Locked;
-		
-		ResetLevel();
 	}
 	
 	void ResetLevel() {
