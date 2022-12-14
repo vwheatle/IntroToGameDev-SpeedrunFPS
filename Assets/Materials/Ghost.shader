@@ -27,6 +27,11 @@ SubShader {
 			return 1.0 - x * x * (3.0 - 2.0 * x);
 		}
 		
+		float pcurve(float x, float a, float b) {
+			const float k = pow(a+b,a+b)/(pow(a,a)*pow(b,b));
+			return k*pow(x,a)*pow(1.0-x,b);
+		}
+		
 		float sineNormal(float x) { return abs(sin(x) * 0.5 + 0.5); }
 		float cosineNormal(float x) { return abs(cos(x) * 0.5 + 0.5); }
 		
@@ -66,7 +71,7 @@ SubShader {
 			o.vertex = UnityObjectToClipPos(v.vertex);
 			o.normal = UnityObjectToWorldNormal(v.normal);
 			o.texcoord = v.texcoord;
-			o.w_vertex = v.vertex;
+			o.w_vertex = mul(unity_ObjectToWorld, v.vertex);
 			UNITY_TRANSFER_FOG(o,o.vertex);
 			return o;
 		}
@@ -93,6 +98,8 @@ SubShader {
 			
 			// Get the actual other texture we promised we were gonna use.
 			fixed4 col = tex2D(_MainTex, i.texcoord) * scannedColor;
+			
+			col *= lerp(0.8, 1.0, pcurve(frac(i.w_vertex.y * 16.0 + _Time.y), 3.0, 1.0));
 			
 			// Unity macro garbage to apply fog, I guess.
 			UNITY_APPLY_FOG(i.fogCoord, col);
