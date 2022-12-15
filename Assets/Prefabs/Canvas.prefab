@@ -534,4 +534,4 @@ MonoBehaviour:
   antispam: 0
   blinker: 0
   blinkerBlinkInterval: 0.125
-  charsPerSecond: 24
+  charsPerSecond: 16
