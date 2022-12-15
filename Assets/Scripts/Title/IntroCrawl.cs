@@ -32,17 +32,24 @@ public class IntroCrawl : MonoBehaviour {
 	// this coroutine will get destroyed when you navigate away anyway.
 	// aaauagh doesn't read from a script, it just.. does this.
 	IEnumerator TextCrawl() {
+		log.ClearLog();
+		yield return new WaitForSeconds(0.25f);
+		yield return StartCoroutine( log.PrintLineAndWait($"A game by {Application.companyName}.") );
+		yield return StartCoroutine( log.PrintLineAndWait("Made for Intro to Game Programming 2022.") );
+		yield return new WaitForSeconds(5f);
+		log.ClearLog();
+		
 		log.animateNewLines = false;
 		log.PrintLine("$ ");
 		yield return new WaitForSeconds(1f);
-		yield return TypeText("cat scenario.txt");
+		yield return StartCoroutine( TypeText("cat scenario.txt") );
 		yield return new WaitForSeconds(0.25f);
 		log.PrintBreak();
 		yield return new WaitForSeconds(0.5f);
 		
 		log.animateNewLines = true;
 		foreach ((string lines, float time) in crawlLines) {
-			yield return log.PrintLineAndWait(lines);
+			yield return StartCoroutine( log.PrintLineAndWait(lines) );
 			yield return new WaitForSeconds(time);
 			// log.PrintMore("^C");
 			log.PrintBreak();
@@ -51,7 +58,7 @@ public class IntroCrawl : MonoBehaviour {
 		
 		log.PrintLine("$ ");
 		yield return new WaitForSeconds(3f);
-		yield return TypeText("rm scenario.txt; clear");
+		yield return StartCoroutine( TypeText("rm scenario.txt; clear") );
 		yield return new WaitForSeconds(0.5f);
 		log.PrintBreak();
 		yield return new WaitForSeconds(0.1f);
@@ -65,7 +72,7 @@ public class IntroCrawl : MonoBehaviour {
 		int hesitation = Random.Range(1, 5) / 2;
 		foreach (char c in text) {
 			if (char.IsWhiteSpace(c)) hesitation = Random.Range(1, 5) / 2;
-			float secs = hesitation > 0 ? Random.Range(0.2f, 0.35f) : Random.Range(0.075f, 0.2f);
+			float secs = hesitation > 0 ? Random.Range(0.2f, 0.35f) : Random.Range(0.05f, 0.15f);
 			log.PrintChar(c);
 			yield return new WaitForSeconds(secs);
 			if (hesitation > 0) hesitation--;
