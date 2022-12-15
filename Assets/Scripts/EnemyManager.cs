@@ -10,6 +10,8 @@ public class EnemyManager : MonoBehaviour {
 	public TextLog log;
 	public TMP_Text timer;
 	
+	public PizzaStack pizzaStack;
+	
 	
 	[Header("Pickup Goal")]
 	private int killed = 0;
@@ -54,6 +56,8 @@ public class EnemyManager : MonoBehaviour {
 			child.gameObject.SetActive(true);
 			child.gameObject.SendMessage("ResetLevel");
 		}
+		
+		pizzaStack.SendMessage("StackUpTo", goalVisits, SendMessageOptions.RequireReceiver);
 		
 		startTime = Time.time;
 	}
@@ -130,6 +134,7 @@ public class EnemyManager : MonoBehaviour {
 	public void OnVisit(GameObject site) {
 		PrintWithTimestamp($"'{site.transform.GetSiblingIndex()}' delivered.");
 		visited++;
+		pizzaStack.SendMessage("UpdateCount", goalVisits - visited, SendMessageOptions.RequireReceiver);
 		
 		if (visited == goalVisits) {
 			PrintWithTimestamp("No deliveries remain.");

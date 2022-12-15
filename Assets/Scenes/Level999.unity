@@ -267,6 +267,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
 --- !u!4 &131478777 stripped
@@ -431,6 +441,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
@@ -619,6 +639,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
 --- !u!4 &342996103 stripped
@@ -673,6 +703,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
@@ -1269,6 +1309,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
 --- !u!4 &1387394301 stripped
@@ -1323,6 +1373,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
@@ -1782,6 +1842,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
 --- !u!4 &1617244230 stripped
@@ -2133,6 +2203,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
 --- !u!4 &2019004316 stripped
@@ -2202,6 +2282,7 @@ MonoBehaviour:
   player: {fileID: 1630507369}
   log: {fileID: 147202160}
   timer: {fileID: 664631936}
+  pizzaStack: {fileID: 4409617797057089459}
   goalKills: -1
   goalVisits: -1
 --- !u!1001 &2066101219
@@ -2461,6 +2542,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6e3d0f39c50f2f4b9697ac9bd88fe11, type: 3}
+--- !u!1 &4409617797057089458 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4409617796362585193, guid: e6e3d0f39c50f2f4b9697ac9bd88fe11,
+    type: 3}
+  m_PrefabInstance: {fileID: 4409617797057089457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4409617797057089459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409617797057089458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d9ba6d4d6defd45bd8951dad492624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pizzaBox: {fileID: 5689219622243410890, guid: 7b7b5de5305855342b635284c1a30fd4,
+    type: 3}
 --- !u!1001 &4524289173982328551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2578,6 +2679,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4524289174120601225, guid: f5d8f91585da70a46bfa263c85a1de34,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d8f91585da70a46bfa263c85a1de34, type: 3}
 --- !u!1001 &6800503309817649267
@@ -2626,6 +2732,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799169, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800503309882799172, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e8fdd47f892a3f4ba0af320bdfc9f65, type: 3}
