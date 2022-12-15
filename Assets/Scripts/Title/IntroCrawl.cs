@@ -17,7 +17,7 @@ public class IntroCrawl : MonoBehaviour {
 	
 	static readonly (string, float)[] crawlLines = {
 		// 48 column limit..
-		("It is the year 30,828 A.D..", 0.75f),
+		("It is the year 30,828 AD.", 0.75f),
 		("Humans are long extinct, but artifacts\nof their time on Earth still remain.", 1.5f),
 		("One of them: the numerous robots built for\nmundane labor, such as food processing,\nbuilding repairs, maintaining server rooms,\nand more.", 1.5f),
 		("Humans have not been kind to Earth, and\nconditions have become less optimal\nfor the robots' operation.", 1.5f),
