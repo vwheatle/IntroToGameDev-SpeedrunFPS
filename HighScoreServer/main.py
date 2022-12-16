@@ -56,15 +56,16 @@ def highscore(cur: Cursor, level: str, time: float, name: str, accuracy: bool):
 		""", (level, name, accuracy))
 		prevTime = cur.fetchone()
 		
-		if prevTime is not None \
-		and time >= prevTime[0]:
-			return "", 205
+		code = 205
 		
-		cur.execute("""
-			REPLACE INTO scores
-			(level, time, name, accuracy)
-			VALUES ( ?, ?, ?, ? );
-		""", (level, time, name, accuracy))
+		if prevTime is None \
+		or time < prevTime[0]:
+			cur.execute("""
+				REPLACE INTO scores
+				(level, time, name, accuracy)
+				VALUES ( ?, ?, ?, ? );
+			""", (level, time, name, accuracy))
+			code = 200
 		
 		cur.execute("""
 			SELECT name, time, accuracy
@@ -78,7 +79,7 @@ def highscore(cur: Cursor, level: str, time: float, name: str, accuracy: bool):
 			for (i, (s_name, time, accuracy))
 			in enumerate(cur.fetchall(), start=1)
 		])
-		return formatted, 200
+		return formatted, code
 	except Exception as e:
 		print(repr(e.__traceback__), repr(e))
 		return "", 500
