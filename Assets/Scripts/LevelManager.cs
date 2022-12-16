@@ -23,6 +23,12 @@ public class LevelManager : MonoBehaviour {
 	
 	private Coroutine whateverImDoing;
 	
+	[Header("Scene Order")]
+	public SceneReference prevScene;
+	public SceneReference nextScene;
+	public SceneReference menuScene;
+	
+	[Header("References")]
 	private GameObject player;
 	public TextLog log;
 	public Stopwatch watch;
@@ -53,6 +59,13 @@ public class LevelManager : MonoBehaviour {
 	// 		"Please only transition from playing -> killed!");
 	// 	currentState = State.Killed;
 	// }
+	
+	void Update() {
+		if (Input.GetAxis("PrevLevel") > 0.5f && prevScene != null)
+			SceneManager.LoadScene( prevScene );
+		if (Input.GetAxis("NextLevel") > 0.5f && nextScene != null)
+			SceneManager.LoadScene( nextScene );
+	}
 	
 	void DonePlaying() {
 		Debug.Assert(currentState == State.Playing,

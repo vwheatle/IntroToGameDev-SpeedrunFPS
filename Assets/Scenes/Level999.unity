@@ -512,6 +512,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e76f98af88cae4baa15b7955ef0add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prevScene:
+    sceneAsset: {fileID: 102900000, guid: ca046eeed3974ce4784960b390e38698, type: 3}
+    scenePath: Assets/Scenes/Level2.unity
+  nextScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+  menuScene:
+    sceneAsset: {fileID: 102900000, guid: 6f85fbbe4eade634c866e7c671837813, type: 3}
+    scenePath: Assets/Scenes/Title.unity
   log: {fileID: 147202160}
   watch: {fileID: 4524289173982328552}
 --- !u!1 &292808598
