@@ -40,6 +40,7 @@ public class BasicEnemy : MonoBehaviour {
 	
 	void LateUpdate() {
 		if (deactivate && deactivate.active) return;
+		if (LevelManager.the.state != LevelManager.State.Playing) return;
 		
 		bool canSeePlayer = (player.transform.position - this.transform.position).magnitude <= maximumDetectRange;
 		
