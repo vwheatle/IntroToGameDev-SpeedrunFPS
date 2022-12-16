@@ -12,8 +12,6 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour {
 	CharacterController cc;
 	
-	public TextLog log;
-	
 	private Vector3 startPosition;
 	private float startRotationY;
 	
@@ -31,14 +29,20 @@ public class PlayerMove : MonoBehaviour {
 	
 	private Transform head, body;
 	
-	void Start() {
-		startPosition = transform.localPosition;
-		startRotationY = transform.localEulerAngles.y;
-		
+	void Awake() {
 		cc = GetComponent<CharacterController>();
 		
 		head = transform.Find("Head"); // where's your head at?
 		body = transform.Find("Body");
+	}
+	
+	void Start() {
+		startPosition = transform.localPosition;
+		startRotationY = transform.localEulerAngles.y;
+		
+		// always strafewalking speed
+		moveSpeed *= Mathf.Sqrt(2);
+		// TODO: what if diagonal walking should be slower lol..
 		
 		ResetLevel();
 	}
@@ -54,43 +58,45 @@ public class PlayerMove : MonoBehaviour {
 	}
 	
 	void Update() {
-		// RaycastHit hit;
-		// touchingGround = Physics.Raycast(
-		// 	new Ray(transform.position, Vector3.down),
-		// 	out hit, cc.height / 2 + 0.1f
-		// );
+		bool moved = false;
 		
-		touchingGround = cc.isGrounded;
-		
-		Vector2 wasd = new Vector2(
-			Input.GetAxisRaw("Horizontal"),
-			Input.GetAxisRaw("Vertical")
-		).normalized * moveSpeed * Mathf.Sqrt(2);
-		// always strafewalking speed,
-		
-		if (touchingGround) {
-			if (Input.GetButton("Jump")) {
-				upward = jumpHeight;
-				touchingGround = false;
+		// Allow movement only during gameplay.
+		if (LevelManager.the.state == LevelManager.State.Playing) {
+			touchingGround = cc.isGrounded;
+			
+			Vector2 wasd = new Vector2(
+				Input.GetAxisRaw("Horizontal"),
+				Input.GetAxisRaw("Vertical")
+			).normalized * moveSpeed;
+			moved = !Mathf.Approximately(wasd.sqrMagnitude, 0f);
+			
+			if (touchingGround) {
+				if (Input.GetButton("Jump")) {
+					upward = jumpHeight;
+					touchingGround = false;
+				} else {
+					upward = 0;
+				}
 			} else {
-				upward = 0;
+				upward = Mathf.Max(-8f, upward - Mathf.Abs(Time.deltaTime * 12f));
 			}
-		} else {
-			upward = Mathf.Max(-8f, upward - Mathf.Abs(Time.deltaTime * 12f));
+			
+			Vector3 movement = new Vector3(wasd.x, upward, wasd.y);
+			movement = transform.localRotation * movement;
+			
+			cc.Move(movement * Time.deltaTime);
+			
+			if (moved) {
+				swayTime += (touchingGround ? 1f : 0.25f) * wasd.magnitude * Time.deltaTime;
+				swayMagnitude = Mathf.Min(swayMagnitude + wasd.magnitude * Time.deltaTime, 1f);
+			}
 		}
 		
-		Vector3 movement = new Vector3(wasd.x, upward, wasd.y);
-		movement = transform.localRotation * movement;
-		
-		cc.Move(movement * Time.deltaTime);
-		
 		// == Sway body around while walking. ==
+		// (and also update animations even if not in gameplay)
 		
 		// If touching ground, sway faster.
-		swayTime += (touchingGround ? 1f : 0.25f) * wasd.magnitude * Time.deltaTime;
-		if (wasd.sqrMagnitude > 0f) {
-			swayMagnitude = Mathf.Min(swayMagnitude + wasd.magnitude * Time.deltaTime, 1f);
-		} else if (Time.timeScale > 0.25f) { // HACK
+		if (!moved) {
 			// If you've stopped moving, dampen towards resting position.
 			// swayMagnitude = Mathf.Lerp(swayMagnitude, 0f, 0.1f);
 			swayMagnitude = Mathf.SmoothDamp(swayMagnitude, 0f, ref swayDampenVelocity, 0.1f);
@@ -106,7 +112,5 @@ public class PlayerMove : MonoBehaviour {
 			Mathf.Abs(Mathf.Cos(Mathf.PI * swayTime * 0.4f)) * swayMagnitude / 16f,
 			0f
 		);
-		// body.localEulerAngles += Vector3.up *
-		// 	Mathf.Sin(Mathf.PI * swayTime * 0.1f) * swayMagnitude * 3f;
 	}
 }

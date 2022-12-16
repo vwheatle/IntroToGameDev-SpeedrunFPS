@@ -1,12 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerShoot : MonoBehaviour {
 	public GameObject bullet;
-	
-	public TextLog log;
 	
 	AudioSource dieSound, shootSound;
 	
@@ -28,39 +25,26 @@ public class PlayerShoot : MonoBehaviour {
 	
 	void Awake() {
 		head = transform.Find("Head");
-		gunArm = transform.Find("Body").Find("Left Arm").Find("Forearm");
-		pizzaArm = transform.Find("Body").Find("Right Arm").Find("Forearm");
+		gunArm = transform.Find("Body/Left Arm/Forearm");
+		pizzaArm = transform.Find("Body/Right Arm/Forearm");
 		
 		dieSound = GetComponent<AudioSource>();
 		shootSound = gunArm.GetComponentInChildren<AudioSource>();
 	}
 	
-	void Start() {
-		log.ClearLog();
-		log.PrintLine("System Initialized.");
-		
-		// TODO: this should just.. run on start for everyone really..
-		ResetLevel();
-	}
-	
-	void ResetEverything(string rationale = null) {
-		log.ClearLog();
-		if (rationale != null)
-			log.PrintLine($"System Restarted.\n(Reason: {rationale})");
-		else
-			log.PrintLine("System Initialized.");
-		
-		GameObject[] rootSiblings = SceneManager.GetActiveScene().GetRootGameObjects();
-		foreach (GameObject rootSibling in rootSiblings)
-			rootSibling.BroadcastMessage("ResetLevel", SendMessageOptions.DontRequireReceiver);
-	}
-	
 	void ResetLevel() {
 		shots = 0; hits = 0;
+		
+		gunArmRecoil = 0f;
+		gunArmRecoilVelocity = 0f;
+		
+		pizzaArmRecoil = 10f;
+		pizzaArmRecoilVelocity = 0f;
 	}
 	
 	void Update() {
-		if (Input.GetButtonDown("Fire1") && Time.timeScale > 0.5f) { // HACK
+		if (LevelManager.the.state == LevelManager.State.Playing
+		&&  Input.GetButtonDown("Fire1")) {
 			GameObject goBullet = Instantiate(
 				bullet,
 				head.position + head.forward * 0.75f,
@@ -86,7 +70,7 @@ public class PlayerShoot : MonoBehaviour {
 	
 	void LateUpdate() {
 		if (Input.GetButtonDown("Reset")) {
-			ResetEverything("Reconsidering");
+			LevelManager.the.ResetEverything("Reconsidering");
 			// Why not restart the entire scene?
 			// Well, because Unity is bad at making inputs persist
 			// across scene reloads -- and if I can avoid a load from
@@ -95,8 +79,8 @@ public class PlayerShoot : MonoBehaviour {
 	}
 	
 	void Hurt() {
-		ResetEverything("Environmental Factor");
 		dieSound.Play();
+		LevelManager.the.ResetEverything("Environmental Factor");
 	}
 	
 	void Killed(GameObject victim) {

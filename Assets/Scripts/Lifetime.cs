@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicLife : MonoBehaviour {
+public class Lifetime : MonoBehaviour {
 	public float deathTime = 10f;
 	private float startTime = 0f;
 	

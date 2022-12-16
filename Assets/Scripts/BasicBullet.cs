@@ -87,7 +87,7 @@ public class BasicBullet : MonoBehaviour {
 				// Hack to not allow enemies to kill eachother.
 			
 			// Bullet Hitbox Cheese
-			DebugDrawBall(this.transform.position, this.coll.bounds.extents.magnitude);
+			// DebugDrawBall(this.transform.position, this.coll.bounds.extents.magnitude);
 			foreach (Collider c in Physics.OverlapSphere(
 				this.transform.position, this.coll.bounds.extents.magnitude,
 				1 << LayerMask.NameToLayer("Default"),
@@ -106,21 +106,21 @@ public class BasicBullet : MonoBehaviour {
 		Destroy(this.gameObject);
 	}
 	
-	void DebugDrawBall(Vector3 position, float radius) {
-		Debug.DrawLine(position - Vector3.right * radius, position + Vector3.right * radius, Color.cyan, 1f);
-		Debug.DrawLine(position - Vector3.forward * radius, position + Vector3.forward * radius, Color.cyan, 1f);
-		Debug.DrawLine(position - Vector3.up * radius, position + Vector3.up * radius, Color.cyan, 1f);
-		
-		Debug.DrawLine(position - Vector3.up * radius, position + Vector3.forward * radius, Color.cyan, 1f);
-		Debug.DrawLine(position - Vector3.up * radius, position - Vector3.forward * radius, Color.cyan, 1f);
-		Debug.DrawLine(position - Vector3.up * radius, position + Vector3.right * radius, Color.cyan, 1f);
-		Debug.DrawLine(position - Vector3.up * radius, position - Vector3.right * radius, Color.cyan, 1f);
-		
-		Debug.DrawLine(position + Vector3.up * radius, position + Vector3.forward * radius, Color.cyan, 1f);
-		Debug.DrawLine(position + Vector3.up * radius, position - Vector3.forward * radius, Color.cyan, 1f);
-		Debug.DrawLine(position + Vector3.up * radius, position + Vector3.right * radius, Color.cyan, 1f);
-		Debug.DrawLine(position + Vector3.up * radius, position - Vector3.right * radius, Color.cyan, 1f);
-	}
+	// void DebugDrawBall(Vector3 position, float radius) {
+	// 	Debug.DrawLine(position - Vector3.right * radius, position + Vector3.right * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position - Vector3.forward * radius, position + Vector3.forward * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position - Vector3.up * radius, position + Vector3.up * radius, Color.cyan, 1f);
+	// 	
+	// 	Debug.DrawLine(position - Vector3.up * radius, position + Vector3.forward * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position - Vector3.up * radius, position - Vector3.forward * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position - Vector3.up * radius, position + Vector3.right * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position - Vector3.up * radius, position - Vector3.right * radius, Color.cyan, 1f);
+	// 	
+	// 	Debug.DrawLine(position + Vector3.up * radius, position + Vector3.forward * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position + Vector3.up * radius, position - Vector3.forward * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position + Vector3.up * radius, position + Vector3.right * radius, Color.cyan, 1f);
+	// 	Debug.DrawLine(position + Vector3.up * radius, position - Vector3.right * radius, Color.cyan, 1f);
+	// }
 	
 	void OnTriggerExit(Collider other) {
 		if (insideOrigin && IsOrigin(other.gameObject))

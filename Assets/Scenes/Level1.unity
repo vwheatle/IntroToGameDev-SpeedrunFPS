@@ -773,6 +773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 286886216}
+  - component: {fileID: 286886217}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -822,6 +823,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &286886217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286886215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e76f98af88cae4baa15b7955ef0add, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1630507369}
+  log: {fileID: 948113470}
+  watch: {fileID: 893203618}
 --- !u!1 &290446760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2033,6 +2049,18 @@ Transform:
   m_Father: {fileID: 286886216}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &893203618 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4104236725081506288, guid: f5d8f91585da70a46bfa263c85a1de34,
+    type: 3}
+  m_PrefabInstance: {fileID: 948113468}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b23cce3ce38a3448b692a6f3fa8f140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &925450656
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,18 +2259,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d8f91585da70a46bfa263c85a1de34, type: 3}
---- !u!114 &948113469 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4524289173435305063, guid: f5d8f91585da70a46bfa263c85a1de34,
-    type: 3}
-  m_PrefabInstance: {fileID: 948113468}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &948113470 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4524289174120601239, guid: f5d8f91585da70a46bfa263c85a1de34,
@@ -2811,6 +2827,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 714725093020421309}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1469782595 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6424548183092250860, guid: f5d8f91585da70a46bfa263c85a1de34,
+    type: 3}
+  m_PrefabInstance: {fileID: 948113468}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1469782599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469782595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e03413c59293a44cb648e3d6901369a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1486163496
 GameObject:
   m_ObjectHideFlags: 0
@@ -3710,7 +3744,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1630507369}
   log: {fileID: 948113470}
-  timer: {fileID: 948113469}
   pizzaStack: {fileID: 428065143}
   goalKills: -1
   goalVisits: -1
