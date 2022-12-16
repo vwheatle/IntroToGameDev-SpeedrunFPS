@@ -77,6 +77,10 @@ public class LevelManager : MonoBehaviour {
 		watch.StopWatch();
 		PrintWithTimestamp("Completed Order.");
 		
+		if (whateverImDoing != null)
+			StopCoroutine(whateverImDoing);
+		whateverImDoing = StartCoroutine( WaitForNextLevel() );
+		
 		float accuracy = player.GetComponent<PlayerShoot>().accuracyRatio;
 		log.PrintLine($"Accuracy: {accuracy * 100f:00.00}%");
 		
@@ -113,6 +117,12 @@ public class LevelManager : MonoBehaviour {
 		yield return new WaitForSeconds(0.125f);
 		yield return new WaitUntil( () => Input.anyKeyDown );
 		StartPlaying();
+	}
+	
+	IEnumerator WaitForNextLevel() {
+		yield return new WaitForSeconds(0.125f);
+		yield return new WaitUntil( () => Input.GetButton("Fire1") );
+		SceneManager.LoadScene( nextScene );
 	}
 	
 	IEnumerator SendScore(float time, bool good) {
