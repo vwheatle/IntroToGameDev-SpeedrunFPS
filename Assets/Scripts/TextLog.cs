@@ -26,7 +26,20 @@ public class TextLog : MonoBehaviour {
 	
 	public bool animateNewLines = true;
 	
-	public bool blinker = false;
+	public bool blinkerEnabled = false;
+	public bool blinker {
+		get => blinkerEnabled;
+		set {
+			if (blinkerEnabled == value) return;
+			blinkerEnabled = value;
+			if (buffer.Count > 0) {
+				buffer[buffer.Count - 1].printed = false;
+			} else if (!blinkerEnabled && textLog.text.Length > 0) {
+				// "Please don't trigger this behavior on purpose."
+				textLog.text = "";
+			}
+		}
+	}
 	public float blinkerBlinkInterval = 1/4f;
 	
 	public float charsPerSecond = 32f;
@@ -42,7 +55,7 @@ public class TextLog : MonoBehaviour {
 	
 	public void Flush(float deltaTime = 0f) {
 		bool allPrinted = buffer.Count == 0 || buffer[buffer.Count - 1].printed;
-		if (allPrinted && !blinker) return; // don't need to update any thing.
+		if (allPrinted && !blinkerEnabled) return; // don't need to update any thing.
 		
 		textLog.text = "";
 		
@@ -63,7 +76,7 @@ public class TextLog : MonoBehaviour {
 			}
 		}
 		
-		if (blinker && allPrinted) {
+		if (blinkerEnabled && allPrinted) {
 			bool blink = Time.unscaledTime % (blinkerBlinkInterval * 2) < blinkerBlinkInterval;
 			
 			textLog.text += blink ? "█" : "<alpha=#00>█"; // this sucks.
@@ -87,7 +100,6 @@ public class TextLog : MonoBehaviour {
 	
 	public void ClearLog() {
 		buffer.Clear();
-		textLog.text = "";
 	}
 	
 	public void PrintMore(string lines) {

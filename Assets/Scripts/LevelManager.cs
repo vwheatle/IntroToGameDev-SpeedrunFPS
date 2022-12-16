@@ -90,7 +90,6 @@ public class LevelManager : MonoBehaviour {
 		if (whateverImDoing != null)
 			StopCoroutine(whateverImDoing);
 		watch.ResetWatch();
-		log.Flush();
 		whateverImDoing = StartCoroutine( ReadyState() );
 	}
 	

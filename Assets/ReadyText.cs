@@ -48,5 +48,6 @@ public class ReadyText : MonoBehaviour {
 	void HideText() {
 		log.ClearLog();
 		log.blinker = false;
+		log.Flush();
 	}
 }
