@@ -61,9 +61,9 @@ public class LevelManager : MonoBehaviour {
 	// }
 	
 	void Update() {
-		if (Input.GetAxis("PrevLevel") > 0.5f && prevScene != null)
+		if (Input.GetAxis("PrevLevel") > 0.5f && prevScene != "")
 			SceneManager.LoadScene( prevScene );
-		if (Input.GetAxis("NextLevel") > 0.5f && nextScene != null)
+		if (Input.GetAxis("NextLevel") > 0.5f && nextScene != "")
 			SceneManager.LoadScene( nextScene );
 	}
 	
