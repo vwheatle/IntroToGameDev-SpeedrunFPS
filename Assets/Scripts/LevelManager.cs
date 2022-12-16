@@ -7,7 +7,11 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour {
 	private static LevelManager me;
 	public static LevelManager the { get => me; }
-	void Awake() { me = this; }
+	void Awake() {
+		me = this;
+		player = GameObject.FindGameObjectWithTag("Player")
+			.transform.root.gameObject;
+	}
 	
 	public enum State {
 		Ready, Playing, /*Killed,*/ Done
@@ -19,7 +23,7 @@ public class LevelManager : MonoBehaviour {
 	
 	private Coroutine whateverImDoing;
 	
-	public GameObject player;
+	private GameObject player;
 	public TextLog log;
 	public Stopwatch watch;
 	

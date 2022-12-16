@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2169213129094919455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409617796362585193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d9ba6d4d6defd45bd8951dad492624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pizzaBox: {fileID: 5689219622243410890, guid: 7b7b5de5305855342b635284c1a30fd4,
+    type: 3}
 --- !u!1 &4409617796401275584
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089387bf67864a14a8615e4aa109bd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  log: {fileID: 0}
   moveSpeed: 8.5
   jumpHeight: 8.1
 --- !u!114 &4898854623734131158
@@ -262,7 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5656183083980665979, guid: 5f9e931fb9ca9504083ace0a6ba0ebba, type: 3}
-  log: {fileID: 0}
   bulletSpeed: 16
 --- !u!82 &4701017496090202162
 AudioSource:
@@ -684,6 +696,12 @@ PrefabInstance:
 --- !u!4 &4409617796358659892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2308684935519373644, guid: a589af27523a51c4e839fa4e72ba56d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105437989636101752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4409617796362585193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2308684935515443729, guid: a589af27523a51c4e839fa4e72ba56d4,
     type: 3}
   m_PrefabInstance: {fileID: 2105437989636101752}
   m_PrefabAsset: {fileID: 0}
