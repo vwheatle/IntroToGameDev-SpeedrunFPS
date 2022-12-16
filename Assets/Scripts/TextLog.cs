@@ -54,8 +54,10 @@ public class TextLog : MonoBehaviour {
 	}
 	
 	public void Flush(float deltaTime = 0f) {
-		bool allPrinted = buffer.Count == 0 || buffer[buffer.Count - 1].printed;
-		if (allPrinted && !blinkerEnabled) return; // don't need to update any thing.
+		bool allPrinted = true;
+		foreach (TextLogItem item in buffer) allPrinted &= item.printed;
+		if (allPrinted && !blinkerEnabled)
+			return; // don't need to update any thing.
 		
 		textLog.text = "";
 		

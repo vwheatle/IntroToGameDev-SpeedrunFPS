@@ -4,8 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour {
-	public SceneReference startLevel;
+	public GameObject levelsPanel;
 	
-	public void ButtonStart() => SceneManager.LoadScene(startLevel);
+	public void ButtonStart() => levelsPanel.gameObject.SetActive(true);
+	public void ButtonHide() => levelsPanel.gameObject.SetActive(false);
 	public void ButtonExit() => Application.Quit(0);
+	
+	void Start() {
+		Cursor.lockState = CursorLockMode.None;
+		levelsPanel.SetActive(false);
+	}
 }

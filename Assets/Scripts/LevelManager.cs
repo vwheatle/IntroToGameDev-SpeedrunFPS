@@ -61,9 +61,11 @@ public class LevelManager : MonoBehaviour {
 	// }
 	
 	void Update() {
-		if (Input.GetAxis("PrevLevel") > 0.5f && prevScene != "")
+		if (Input.GetButton("Cancel") && menuScene != "")
+			SceneManager.LoadScene( menuScene );
+		if (Input.GetButton("PrevLevel") && prevScene != "")
 			SceneManager.LoadScene( prevScene );
-		if (Input.GetAxis("NextLevel") > 0.5f && nextScene != "")
+		if (Input.GetButton("NextLevel") && nextScene != "")
 			SceneManager.LoadScene( nextScene );
 	}
 	
@@ -124,7 +126,20 @@ public class LevelManager : MonoBehaviour {
 		form.AddField("name", PlayerPrefs.GetString("name", "Bot" + UnityEngine.Random.Range(0, 999).ToString()));
 		form.AddField("accuracy", good ? "*" : "");
 		
-		UnityWebRequest www = UnityWebRequest.Post("http://localhost:8000/score/submit", form);
+		// 👍
+		string serverAddress = "http://localhost:8000";
+		if (PlayerPrefs.GetString("server", "").Length > 0) {
+			serverAddress = PlayerPrefs.GetString("server");
+		}
+		if (serverAddress.LastIndexOf('/') >= 0) {
+			if (serverAddress.EndsWith("/"))
+				serverAddress.Remove(serverAddress.Length - 1);
+		} else {
+			log.PrintLine("Invalid Telemetry Configuration.");
+			yield break;
+		}
+		
+		UnityWebRequest www = UnityWebRequest.Post(serverAddress + "/score/submit", form);
 		www.useHttpContinue = false;
 		yield return www.SendWebRequest();
 		

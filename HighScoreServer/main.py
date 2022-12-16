@@ -61,7 +61,7 @@ def highscore(cur: Cursor, level: str, time: float, name: str, accuracy: bool):
 			return "", 205
 		
 		cur.execute("""
-			INSERT INTO scores
+			REPLACE INTO scores
 			(level, time, name, accuracy)
 			VALUES ( ?, ?, ?, ? );
 		""", (level, time, name, accuracy))
