@@ -9,6 +9,7 @@ public class PlayerShoot : MonoBehaviour {
 	
 	Transform head;
 	Transform gunArm, pizzaArm;
+	Animator pizzaArmAnim;
 	
 	float gunArmRecoil = 0f;
 	float gunArmRecoilVelocity;
@@ -30,6 +31,8 @@ public class PlayerShoot : MonoBehaviour {
 		
 		dieSound = GetComponent<AudioSource>();
 		shootSound = gunArm.GetComponentInChildren<AudioSource>();
+		
+		pizzaArmAnim = pizzaArm.GetComponentInParent<Animator>();
 	}
 	
 	void ResetLevel() {
@@ -40,6 +43,8 @@ public class PlayerShoot : MonoBehaviour {
 		
 		pizzaArmRecoil = 10f;
 		pizzaArmRecoilVelocity = 0f;
+		
+		pizzaArmAnim.SetBool("Done", false);
 	}
 	
 	void Update() {
@@ -61,14 +66,19 @@ public class PlayerShoot : MonoBehaviour {
 			shootSound.pitch = 1f + (Random.value / 16);
 			shootSound.Play();
 		}
-		
-		gunArmRecoil = Mathf.SmoothDampAngle(gunArmRecoil, 0f, ref gunArmRecoilVelocity, 0.25f);
-		pizzaArmRecoil = Mathf.SmoothDampAngle(pizzaArmRecoil, 0f, ref pizzaArmRecoilVelocity, 0.25f);
-		gunArm.localRotation = Quaternion.Euler(0f, gunArmRecoil, -10f);
-		pizzaArm.localRotation = Quaternion.Euler(pizzaArmRecoil, 0f, 0f);
 	}
 	
 	void LateUpdate() {
+		bool done = LevelManager.the.state == LevelManager.State.Done;
+		if (done) {
+			pizzaArmAnim.SetBool("Done", done);
+		} else {
+			gunArmRecoil = Mathf.SmoothDampAngle(gunArmRecoil, 0f, ref gunArmRecoilVelocity, 0.25f);
+			pizzaArmRecoil = Mathf.SmoothDampAngle(pizzaArmRecoil, 0f, ref pizzaArmRecoilVelocity, 0.25f);
+			gunArm.localRotation = Quaternion.Euler(0f, gunArmRecoil, -10f);
+			pizzaArm.localRotation = Quaternion.Euler(pizzaArmRecoil, 0f, 0f);
+		}
+		
 		if (Input.GetButtonDown("Reset")) {
 			LevelManager.the.ResetEverything("Reconsidering");
 			// Why not restart the entire scene?
