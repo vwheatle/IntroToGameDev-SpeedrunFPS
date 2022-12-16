@@ -16,7 +16,7 @@ class TextLogItem {
 }
 
 public class TextLog : MonoBehaviour {
-	public TMP_Text textLog;
+	private TMP_Text textLog;
 	private List<TextLogItem> buffer;
 	
 	public int maxLines = 1;
@@ -30,34 +30,52 @@ public class TextLog : MonoBehaviour {
 	public float charsPerSecond = 32f;
 	
 	void Awake() {
+		textLog = GetComponent<TMP_Text>();
 		buffer = new List<TextLogItem>();
 	}
 	
 	void Update() {
-		textLog.text = "";
-		
-		// moved up here because otherwise it'd double-print the cursor..
 		bool lastDone = buffer.Count == 0 || buffer[buffer.Count - 1].done;
+		if (lastDone && !blinker) return; // don't need to update any thing.
+		
+		textLog.text = "";
 		
 		int i = 0;
 		for (i = 0; i < buffer.Count; i++) {
-			if (textLog.text.Length > 0) textLog.text += "\n";
+			textLog.text += "\n";
 			
 			if (buffer[i].done) {
 				textLog.text += buffer[i].text;
 			} else {
 				float speed = 1f + (buffer.Count - i) * 0.75f;
-				buffer[i].time += Time.unscaledDeltaTime * speed * charsPerSecond;
+				buffer[i].time += Time.deltaTime * speed * charsPerSecond;
 				
 				int amount = Mathf.Min(Mathf.CeilToInt(buffer[i].time), buffer[i].text.Length);
-				textLog.text += buffer[i].text.Substring(0, amount) + "█";
+				textLog.text += buffer[i].text.Substring(0, amount);
 				if (amount >= buffer[i].text.Length) buffer[i].done = true;
+				else textLog.text += "█";
 			}
 		}
 		
 		if (blinker && lastDone) {
 			bool blink = Time.unscaledTime % (blinkerBlinkInterval * 2) < blinkerBlinkInterval;
-			textLog.text += blink ? "█" : " ";
+			
+			textLog.text += blink ? "█" : "<alpha=#00>█"; // this sucks.
+			
+			// if i don't have that tag, TMP'll trim the last character
+			// and even if i add a fancy unicode empty character,
+			// it'll still just cull(?) that when generating the mesh.
+			// so instead i have to have it interpret this god dang
+			// faux-HTML tag every freaking frame and generate a
+			// quad that'll never be drawn. what a waste of CPU.
+			
+			// i do this because i use this blinker in some centered text
+			// and i'm pretty sure it centers after mesh generation,
+			// :   )     so i have to generate something "visible".
+			
+			// maybe i care too much about the wrong stuff.
+			// i should probably optimize my shaders
+			// if i want to complain about efficiency..
 		}
 	}
 	
@@ -75,8 +93,8 @@ public class TextLog : MonoBehaviour {
 				TextLogItem last = buffer[buffer.Count - 1];
 				
 				last.done = animateNewLines;
-				last.time = (float)last.text.Length;
 				last.text += line;
+				last.time = (float)last.text.Length;
 				
 				youAlreadyAddedOne = true;
 			}

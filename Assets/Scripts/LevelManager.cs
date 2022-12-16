@@ -94,8 +94,7 @@ public class LevelManager : MonoBehaviour {
 	IEnumerator ReadyState() {
 		currentState = State.Ready;
 		yield return new WaitForSeconds(0.125f);
-		while (!Input.anyKey)
-			yield return new WaitForFixedUpdate();
+		yield return new WaitUntil( () => Input.anyKeyDown );
 		StartPlaying();
 	}
 	

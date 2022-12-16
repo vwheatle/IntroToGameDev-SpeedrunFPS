@@ -450,8 +450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -485,7 +485,7 @@ MonoBehaviour:
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 1
+  m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -543,7 +543,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f4d334d0cfb354884eb03506c5d381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textLog: {fileID: 4524289174120601225}
   maxLines: 10
   antispam: 0
   animateNewLines: 1
@@ -561,6 +560,7 @@ GameObject:
   - component: {fileID: 4938882970157153906}
   - component: {fileID: 4818919498937193048}
   - component: {fileID: 3510692355888776851}
+  - component: {fileID: 2214358886918902036}
   - component: {fileID: 462814610590329699}
   m_Layer: 5
   m_Name: Ready Text
@@ -583,11 +583,11 @@ RectTransform:
   m_Father: {fileID: 4524289174093111409}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 256, y: 96}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4818919498937193048
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -610,12 +610,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ready...
+  m_text: 'Ready?
+
+    <size=16>Press any key...'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 191158d98b7fcc144b71d594a000e851, type: 2}
   m_sharedMaterial: {fileID: -620212202466242155, guid: 191158d98b7fcc144b71d594a000e851,
@@ -650,8 +652,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -659,9 +661,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 2
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -685,6 +687,24 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2214358886918902036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6424548183092250860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4d334d0cfb354884eb03506c5d381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLines: 2
+  antispam: 0
+  animateNewLines: 1
+  blinker: 1
+  blinkerBlinkInterval: 0.25
+  charsPerSecond: 48
 --- !u!114 &462814610590329699
 MonoBehaviour:
   m_ObjectHideFlags: 0
