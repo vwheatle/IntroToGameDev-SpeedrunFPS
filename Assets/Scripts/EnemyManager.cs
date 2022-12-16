@@ -19,11 +19,13 @@ public class EnemyManager : MonoBehaviour {
 	public int goalKills = -1;
 	public int goalVisits = -1;
 	public float percentKilled {
-		get => (float)killed / goalKills;
+		get => goalKills > 0 ? (float)killed / goalKills : 1f;
 	}
-	public bool achievedGoalKills {
-		get => killed >= goalKills;
+	public float percentVisited {
+		get => goalVisits > 0 ? (float)visited / goalVisits : 1f;
 	}
+	public bool achievedGoalKills { get => killed >= goalKills; }
+	public bool achievedGoalVisits { get => visited >= goalVisits; }
 	
 	float startTime;
 	

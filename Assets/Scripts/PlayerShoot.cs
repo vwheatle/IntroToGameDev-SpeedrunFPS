@@ -23,7 +23,7 @@ public class PlayerShoot : MonoBehaviour {
 	
 	int shots, hits;
 	public float accuracyRatio {
-		get => (float)hits / shots;
+		get => shots > 0 ? (float)hits / shots : 1f;
 	}
 	
 	void Awake() {
@@ -38,6 +38,9 @@ public class PlayerShoot : MonoBehaviour {
 	void Start() {
 		log.ClearLog();
 		log.PrintLine("System Initialized.");
+		
+		// TODO: this should just.. run on start for everyone really..
+		ResetLevel();
 	}
 	
 	void ResetEverything(string rationale = null) {
@@ -50,7 +53,9 @@ public class PlayerShoot : MonoBehaviour {
 		GameObject[] rootSiblings = SceneManager.GetActiveScene().GetRootGameObjects();
 		foreach (GameObject rootSibling in rootSiblings)
 			rootSibling.BroadcastMessage("ResetLevel", SendMessageOptions.DontRequireReceiver);
-		
+	}
+	
+	void ResetLevel() {
 		shots = 0; hits = 0;
 	}
 	

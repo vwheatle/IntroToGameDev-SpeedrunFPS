@@ -53,8 +53,8 @@ public class Waypoint : MonoBehaviour {
 		if (ignoreTime > 0f) return; // HACK :(
 		if (!other.CompareTag("Player")) return;
 		
-		float pitchVariation = Random.value / Mathf.Min(4, em.goalKills) / 2;
-		audioSource.pitch = 0.9f + em.percentKilled + pitchVariation;
+		float pitchVariation = Random.value / Mathf.Min(4, em.goalVisits) / 2;
+		audioSource.pitch = 0.9f + em.percentVisited + pitchVariation;
 		audioSource.Play();
 		
 		visualShrink.StartShrink();
