@@ -17,6 +17,9 @@ public class PlayerShoot : MonoBehaviour {
 	float pizzaArmRecoil = 0f;
 	float pizzaArmRecoilVelocity;
 	
+	float pizzaArmSwivel = 0f;
+	float pizzaArmSwivelVelocity;
+	
 	public float bulletSpeed = 12f;
 	
 	int shots, hits;
@@ -44,6 +47,9 @@ public class PlayerShoot : MonoBehaviour {
 		pizzaArmRecoil = 10f;
 		pizzaArmRecoilVelocity = 0f;
 		
+		pizzaArmSwivel = 0f;
+		pizzaArmSwivelVelocity = 0f;
+		
 		pizzaArmAnim.SetBool("Done", false);
 	}
 	
@@ -66,6 +72,12 @@ public class PlayerShoot : MonoBehaviour {
 			shootSound.pitch = 1f + (Random.value / 16);
 			shootSound.Play();
 		}
+		
+		float pizzaArmSwivelGoal = Input.GetButton("Fire2") ? 50f : 0f;
+		
+		gunArmRecoil = Mathf.SmoothDampAngle(gunArmRecoil, 0f, ref gunArmRecoilVelocity, 0.25f);
+		pizzaArmRecoil = Mathf.SmoothDampAngle(pizzaArmRecoil, 0f, ref pizzaArmRecoilVelocity, 0.25f);
+		pizzaArmSwivel = Mathf.SmoothDampAngle(pizzaArmSwivel, pizzaArmSwivelGoal, ref pizzaArmSwivelVelocity, 0.25f);
 	}
 	
 	void LateUpdate() {
@@ -73,10 +85,8 @@ public class PlayerShoot : MonoBehaviour {
 		if (done) {
 			pizzaArmAnim.SetBool("Done", done);
 		} else {
-			gunArmRecoil = Mathf.SmoothDampAngle(gunArmRecoil, 0f, ref gunArmRecoilVelocity, 0.25f);
-			pizzaArmRecoil = Mathf.SmoothDampAngle(pizzaArmRecoil, 0f, ref pizzaArmRecoilVelocity, 0.25f);
 			gunArm.localRotation = Quaternion.Euler(0f, gunArmRecoil, -10f);
-			pizzaArm.localRotation = Quaternion.Euler(pizzaArmRecoil, 0f, 0f);
+			pizzaArm.localRotation = Quaternion.Euler(pizzaArmRecoil, pizzaArmSwivel, 0f);
 		}
 		
 		if (Input.GetButtonDown("Reset")) {
