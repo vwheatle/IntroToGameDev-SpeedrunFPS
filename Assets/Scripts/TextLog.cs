@@ -111,6 +111,7 @@ public class TextLog : MonoBehaviour {
 				TextLogItem last = buffer[buffer.Count - 1];
 				
 				last.done = animateNewLines;
+				last.printed = false;
 				last.text += line;
 				last.time = (float)last.text.Length;
 				
@@ -127,6 +128,7 @@ public class TextLog : MonoBehaviour {
 			TextLogItem last = buffer[buffer.Count - 1];
 			
 			last.done = animateNewLines;
+			last.printed = false;
 			last.time = (float)last.text.Length;
 			last.text += c;
 		}
@@ -146,9 +148,7 @@ public class TextLog : MonoBehaviour {
 			if (buffer.Count <= 0) yield break;
 			
 			TextLogItem last = buffer[buffer.Count - 1];
-			while (!last.done) {
-				yield return new WaitForFixedUpdate();
-			}
+			yield return new WaitUntil( () => last.printed );
 		}
 	}
 	

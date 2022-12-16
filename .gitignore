@@ -83,3 +83,7 @@ crashlytics-build.properties
 
 # :   )
 HighScoreServer/scores.db
+
+# :     )
+# /[Aa]ssets/Scenes/*/
+# /[Aa]ssets/Scenes/*.meta

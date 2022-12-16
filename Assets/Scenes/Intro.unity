@@ -482,9 +482,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'INTRO SCROLL...
-
-    IT GOES HERE!!!'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 191158d98b7fcc144b71d594a000e851, type: 2}
   m_sharedMaterial: {fileID: -620212202466242155, guid: 191158d98b7fcc144b71d594a000e851,
@@ -508,7 +506,7 @@ MonoBehaviour:
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 1
+  m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -617,10 +615,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f4d334d0cfb354884eb03506c5d381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textLog: {fileID: 8833582952017762381}
   maxLines: 14
   antispam: 0
   animateNewLines: 1
-  blinker: 1
+  blinkerEnabled: 1
   blinkerBlinkInterval: 0.25
   charsPerSecond: 16

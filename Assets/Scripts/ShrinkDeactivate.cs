@@ -12,18 +12,18 @@ public class ShrinkDeactivate : MonoBehaviour {
 	
 	Vector3 initialScale = Vector3.one;
 	
-	new Collider collider;
+	Collider theCollider;
 	// omg c# who asked
 	// (loll the warning was referring to a removed field...)
 	
 	void Start() {
-		collider = GetComponent<Collider>();
+		theCollider = GetComponent<Collider>();
 		initialScale = transform.localScale;
 	}
 	
 	// Shrink into nothing and then deactivate object.
 	public void StartShrink() {
-		if (collider) collider.enabled = false;
+		if (theCollider) theCollider.enabled = false;
 		
 		startTime = Time.unscaledTime;
 		_active = true;
@@ -33,7 +33,7 @@ public class ShrinkDeactivate : MonoBehaviour {
 		transform.localScale = initialScale;
 		_active = false;
 		
-		if (collider) collider.enabled = true;
+		if (theCollider) theCollider.enabled = true;
 	}
 	
 	void LateUpdate() {
