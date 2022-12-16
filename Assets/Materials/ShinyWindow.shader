@@ -79,6 +79,8 @@ SubShader {
 				t = i.texcoord.xz;
 			}
 			
+			t.y = frac(t.y / _Scale) * _Scale;
+			
 			// "normalized" screen-space coordinates.
 			// normalized in quotes because they're kinda saturated, but
 			// the horizontal component is scaled to the aspect ratio,
@@ -96,7 +98,7 @@ SubShader {
 			// It's stored as a single transparency channel.
 			
 			// ...and then multiply that transparency channel by
-			trans *= i.texcoord.y / 32;
+			trans *= t.y / 32;
 			
 			// TODO: multiply the transparency also by the dot product of
 			// uhhhhhhhhh the camera. maybe make it solid 0.75 alpha white

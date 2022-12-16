@@ -100,7 +100,8 @@ public class PlayerShoot : MonoBehaviour {
 	
 	void Hurt() {
 		dieSound.Play();
-		LevelManager.the.ResetEverything("Environmental Factor");
+		if (LevelManager.the.state == LevelManager.State.Playing)
+			LevelManager.the.ResetEverything("Environmental Factor");
 	}
 	
 	void Killed(GameObject victim) {
