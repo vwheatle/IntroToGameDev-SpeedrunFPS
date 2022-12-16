@@ -43,6 +43,7 @@ public class LevelManager : MonoBehaviour {
 		Debug.Assert(currentState == State.Ready, 
 			"Please only transition from ready -> playing!");
 		currentState = State.Playing;
+		log.animateNewLines = true;
 		watch.ResetWatch();
 		watch.StartWatch();
 	}
@@ -74,6 +75,7 @@ public class LevelManager : MonoBehaviour {
 	public void ResetEverything(string rationale = null) {
 		watch.StopWatch();
 		log.ClearLog();
+		log.animateNewLines = false;
 		if (rationale != null)
 			log.PrintLine($"System Restarted.\n(Reason: {rationale})");
 		else
@@ -88,6 +90,7 @@ public class LevelManager : MonoBehaviour {
 		if (whateverImDoing != null)
 			StopCoroutine(whateverImDoing);
 		watch.ResetWatch();
+		log.Flush();
 		whateverImDoing = StartCoroutine( ReadyState() );
 	}
 	

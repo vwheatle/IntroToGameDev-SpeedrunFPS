@@ -8,11 +8,13 @@ class TextLogItem {
 		this.time = 0f;
 		this.text = text;
 		this.done = !animate;
+		this.printed = false;
 	}
 	
 	public float time;
 	public string text;
 	public bool done;
+	public bool printed = false;
 }
 
 public class TextLog : MonoBehaviour {
@@ -35,8 +37,12 @@ public class TextLog : MonoBehaviour {
 	}
 	
 	void Update() {
-		bool lastDone = buffer.Count == 0 || buffer[buffer.Count - 1].done;
-		if (lastDone && !blinker) return; // don't need to update any thing.
+		Flush(Time.deltaTime);
+	}
+	
+	public void Flush(float deltaTime = 0f) {
+		bool allPrinted = buffer.Count == 0 || buffer[buffer.Count - 1].printed;
+		if (allPrinted && !blinker) return; // don't need to update any thing.
 		
 		textLog.text = "";
 		
@@ -46,18 +52,18 @@ public class TextLog : MonoBehaviour {
 			
 			if (buffer[i].done) {
 				textLog.text += buffer[i].text;
+				buffer[i].printed = true;
 			} else {
 				float speed = 1f + (buffer.Count - i) * 0.75f;
 				buffer[i].time += Time.deltaTime * speed * charsPerSecond;
 				
 				int amount = Mathf.Min(Mathf.CeilToInt(buffer[i].time), buffer[i].text.Length);
-				textLog.text += buffer[i].text.Substring(0, amount);
+				textLog.text += buffer[i].text.Substring(0, amount) + "█";
 				if (amount >= buffer[i].text.Length) buffer[i].done = true;
-				else textLog.text += "█";
 			}
 		}
 		
-		if (blinker && lastDone) {
+		if (blinker && allPrinted) {
 			bool blink = Time.unscaledTime % (blinkerBlinkInterval * 2) < blinkerBlinkInterval;
 			
 			textLog.text += blink ? "█" : "<alpha=#00>█"; // this sucks.
