@@ -91,8 +91,8 @@ public class BasicEnemy : MonoBehaviour {
 			if (deactivate) deactivate.StartShrink();
 			else gameObject.SetActive(false);
 			
-			em.OnKill(this.gameObject, culprit);
 			culprit.SendMessage("Killed", this.gameObject, SendMessageOptions.DontRequireReceiver);
+			em.OnKill(this.gameObject, culprit);
 		}
 	}
 }
