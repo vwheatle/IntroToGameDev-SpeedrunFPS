@@ -66,18 +66,22 @@ public class BasicBullet : MonoBehaviour {
 			// if they both originate from the same person, wtf.
 			if (origin == bother.origin) {
 				// origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
+				
+				return; // Don't destroy.
 			} else {
 				// Again, if this bullet hit another bullet...
+				Debug.Log("bullets kissing bullets");
 				
 				// ...and this bullet is from a player...
 				if (origin.CompareTag("Player"))
 					// ...hurt the non-player entity.
 					bother.origin.SendMessage("Hurt", origin, SendMessageOptions.DontRequireReceiver);
-				
 				// ...and the other bullet is from a player...
-				if (bother.origin.CompareTag("Player"))
+				else if (bother.origin.CompareTag("Player"))
 					// ...hurt the non-player entity.
 					origin.SendMessage("Hurt", bother.origin, SendMessageOptions.DontRequireReceiver);
+				else
+					return;
 			}
 			
 			// Interacting with the other bullet destroys it.
