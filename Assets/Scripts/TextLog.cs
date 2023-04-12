@@ -91,7 +91,7 @@ public class TextLog : MonoBehaviour {
 			// quad that'll never be drawn. what a waste of CPU.
 			
 			// i do this because i use this blinker in some centered text
-			// and i'm pretty sure it centers after mesh generation,
+			// and i'm pretty sure it centers *after* mesh generation,
 			// :   )     so i have to generate something "visible".
 			
 			// maybe i care too much about the wrong stuff.

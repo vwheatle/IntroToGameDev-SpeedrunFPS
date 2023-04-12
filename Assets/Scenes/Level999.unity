@@ -747,6 +747,80 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 444455314}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &726516291
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7204819136234101445, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_Name
+      value: Signage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 22.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.89981544
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.13616888
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.4144622
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.003366832
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 14.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -50.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136234101446, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -6.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7204819136250032294, guid: 9aa0359c565891744bb4f7434054ad54,
+        type: 3}
+      propertyPath: m_text
+      value: "hii it's the \ndebug level\n\nSorry."
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9aa0359c565891744bb4f7434054ad54, type: 3}
 --- !u!1 &783590033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2278,7 +2352,7 @@ Transform:
   - {fileID: 1735694409}
   - {fileID: 818671014}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2051987599
 MonoBehaviour:
